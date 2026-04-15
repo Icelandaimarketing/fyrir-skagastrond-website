@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Users, MessageCircle, MapPin, Star, Tv, Pizza, Clock } from 'lucide-react';
+import { ArrowLeft, Users, MessageCircle, MapPin, Star, Tv, Utensils, Clock } from 'lucide-react';
 import { getCandidateBySlug, candidates } from '../data/candidates';
 import { useTranslation } from '../i18n/useTranslation';
 import qa from '../data/candidateQA';
@@ -13,7 +13,7 @@ const fadeUp = {
 
 const QA_ITEMS = [
   { key: 'fritimi',     labelKey: 'qa.q.fritimi',     icon: Clock },
-  { key: 'pizza',       labelKey: 'qa.q.pizza',       icon: Pizza },
+  { key: 'pizza',       labelKey: 'qa.q.pizza',       icon: Utensils },
   { key: 'netflix',     labelKey: 'qa.q.netflix',     icon: Tv },
   { key: 'samstarf',    labelKey: 'qa.q.samstarf',    icon: Users },
   { key: 'uppahald',    labelKey: 'qa.q.uppahald',    icon: MapPin },
