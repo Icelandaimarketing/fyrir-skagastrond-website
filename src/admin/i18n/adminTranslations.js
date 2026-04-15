@@ -1,0 +1,162 @@
+// Admin Dashboard — Bilingual UI strings (Icelandic + English)
+// Used throughout the dashboard interface itself.
+// Content editing strings (for public site content) stay in the content tables.
+
+const adminTranslations = {
+  // ── AUTH ──────────────────────────────────────────────────────
+  'login.title': { is: 'Innskráning', en: 'Sign In' },
+  'login.subtitle': { is: 'Stjórnborð — Fyrir Skagaströnd', en: 'Dashboard — Fyrir Skagaströnd' },
+  'login.email': { is: 'Netfang', en: 'Email address' },
+  'login.password': { is: 'Lykilorð', en: 'Password' },
+  'login.submit': { is: 'Skrá inn', en: 'Sign in' },
+  'login.loading': { is: 'Skrái inn...', en: 'Signing in...' },
+  'login.error': { is: 'Rangt netfang eða lykilorð', en: 'Invalid email or password' },
+  'login.forgot': { is: 'Gleymt lykilorð?', en: 'Forgot password?' },
+
+  // ── NAV ───────────────────────────────────────────────────────
+  'nav.home': { is: 'Yfirlit', en: 'Overview' },
+  'nav.content': { is: 'Vefsíðuinnihald', en: 'Page Content' },
+  'nav.candidates': { is: 'Frambjóðendur', en: 'Candidates' },
+  'nav.media': { is: 'Myndabanki', en: 'Media Library' },
+  'nav.facebook': { is: 'Facebook færslur', en: 'Facebook Posts' },
+  'nav.contact': { is: 'Sambandsupplýsingar', en: 'Contact Details' },
+  'nav.seo': { is: 'SEO stillingar', en: 'SEO Settings' },
+  'nav.users': { is: 'Notendur', en: 'Users' },
+
+  // ── TOPBAR ────────────────────────────────────────────────────
+  'topbar.view_site': { is: 'Skoða vef', en: 'View site' },
+  'topbar.logout': { is: 'Útskrá', en: 'Sign out' },
+  'topbar.logged_in_as': { is: 'Innskráður sem', en: 'Signed in as' },
+
+  // ── DASHBOARD HOME ────────────────────────────────────────────
+  'dash.welcome': { is: 'Velkomin/n í stjórnborðið', en: 'Welcome to the dashboard' },
+  'dash.site_status': { is: 'Staða vefsíðu', en: 'Site status' },
+  'dash.site_live': { is: 'Vefsíðan er í loftinu', en: 'Site is live' },
+  'dash.quick_actions': { is: 'Flýtiaðgerðir', en: 'Quick actions' },
+  'dash.edit_content': { is: 'Breyta innihaldi', en: 'Edit content' },
+  'dash.edit_candidates': { is: 'Breyta frambjóðendum', en: 'Edit candidates' },
+  'dash.edit_facebook': { is: 'Facebook færslur', en: 'Facebook posts' },
+  'dash.edit_contact': { is: 'Sambandsupplýsingar', en: 'Contact details' },
+  'dash.setup_required': { is: 'Uppsetning þarf', en: 'Setup required' },
+  'dash.setup_desc': { is: 'Gagnagrunnsinn er tómur. Smelltu á hnappinn til að búa til öll gögn frá vefsíðunni.', en: 'The database is empty. Click the button to initialize all data from the existing site.' },
+  'dash.init_db': { is: 'Frumstilla gagnasafn', en: 'Initialize Database' },
+  'dash.init_loading': { is: 'Frumstilli...', en: 'Initializing...' },
+  'dash.init_success': { is: 'Gagnasafn frumstillt! Allt innihald er tilbúið.', en: 'Database initialized! All content is ready.' },
+  'dash.init_error': { is: 'Villa við frumstillingu. Prófaðu aftur.', en: 'Error initializing. Please try again.' },
+  'dash.candidates_count': { is: 'frambjóðendur', en: 'candidates' },
+  'dash.content_keys': { is: 'textahlutir', en: 'content items' },
+  'dash.languages': { is: 'tungumál', en: 'languages' },
+
+  // ── CONTENT EDITOR ────────────────────────────────────────────
+  'content.title': { is: 'Breyta vefsíðuinnihaldi', en: 'Edit Page Content' },
+  'content.subtitle': { is: 'Veldu hluta til að breyta. Breytingar eru vistaðar sem drög og birtar þegar þú ýtir á "Birta".', en: 'Select a section to edit. Changes are saved as drafts and go live when you click "Publish".' },
+  'content.select_section': { is: 'Veldu hluta', en: 'Select section' },
+  'content.field_label': { is: 'Tungumál', en: 'Language' },
+  'content.save_draft': { is: 'Vista drög', en: 'Save draft' },
+  'content.saving': { is: 'Vistar...', en: 'Saving...' },
+  'content.saved': { is: 'Vistað!', en: 'Saved!' },
+  'content.publish': { is: 'Birta allar breytingar', en: 'Publish all changes' },
+  'content.publishing': { is: 'Birtir...', en: 'Publishing...' },
+  'content.published': { is: 'Birt!', en: 'Published!' },
+  'content.has_draft': { is: 'Óbirtar breytingar', en: 'Unpublished changes' },
+  'content.no_draft': { is: 'Engar breytingar', en: 'No changes' },
+  'content.current_live': { is: 'Birt á vef', en: 'Currently live' },
+  'content.preview': { is: 'Forskoðun', en: 'Preview' },
+  'content.chars': { is: 'stafir', en: 'characters' },
+
+  // ── SECTION NAMES (for Content Editor sidebar) ────────────────
+  'section.hero': { is: 'Forsíða (Hero)', en: 'Hero Section' },
+  'section.pillars': { is: 'Stefna og áherslur', en: 'Policy Pillars' },
+  'section.candidates': { is: 'Framboðslisti hluti', en: 'Candidates Section' },
+  'section.about': { is: 'Um okkur', en: 'About Us' },
+  'section.contact_section': { is: 'Sambandshluti', en: 'Contact Section' },
+  'section.nav': { is: 'Valmynd', en: 'Navigation' },
+  'section.footer': { is: 'Neðanmál', en: 'Footer' },
+
+  // ── CANDIDATES ────────────────────────────────────────────────
+  'candidates.title': { is: 'Frambjóðendur', en: 'Candidates' },
+  'candidates.subtitle': { is: 'Breyttu upplýsingum, myndum og ævisögu hvers frambjóðanda.', en: 'Edit the information, photo and biography for each candidate.' },
+  'candidates.lead': { is: 'Oddviti', en: 'Lead candidate' },
+  'candidates.nr': { is: 'Nr.', en: 'No.' },
+  'candidates.edit': { is: 'Breyta', en: 'Edit' },
+  'candidates.photo': { is: 'Mynd', en: 'Photo' },
+  'candidates.name': { is: 'Fullt nafn', en: 'Full name' },
+  'candidates.name_note': { is: 'Nafnið þýðist ekki — það er eins á öllum tungumálum', en: 'The name is not translated — it is the same in all languages' },
+  'candidates.role': { is: 'Starfsheiti / Hlutverk', en: 'Job title / Role' },
+  'candidates.bio': { is: 'Ævisaga / Kynning', en: 'Biography' },
+  'candidates.upload_photo': { is: 'Hlaða upp mynd', en: 'Upload photo' },
+  'candidates.upload_hint': { is: 'Dragðu mynd hingað eða smelltu til að velja', en: 'Drag a photo here or click to select' },
+  'candidates.upload_types': { is: 'JPG eða PNG, max 5MB', en: 'JPG or PNG, max 5MB' },
+  'candidates.save': { is: 'Vista frambjóðanda', en: 'Save candidate' },
+  'candidates.back': { is: 'Til baka', en: 'Back' },
+  'candidates.publish': { is: 'Birta breytingar', en: 'Publish changes' },
+  'candidates.saved': { is: 'Vistað!', en: 'Saved!' },
+  'candidates.published': { is: 'Birt!', en: 'Published!' },
+
+  // ── FACEBOOK ──────────────────────────────────────────────────
+  'fb.title': { is: 'Facebook færslur', en: 'Facebook Posts' },
+  'fb.subtitle': { is: 'Bættu við, fjarlægðu eða raðaðu Facebook færslum á vefsíðunni.', en: 'Add, remove or reorder Facebook posts shown on the website.' },
+  'fb.add': { is: 'Bæta við færslu', en: 'Add post' },
+  'fb.url_label': { is: 'Facebook póstur embed URL', en: 'Facebook post embed URL' },
+  'fb.url_placeholder': { is: 'https://www.facebook.com/plugins/post.php?href=...', en: 'https://www.facebook.com/plugins/post.php?href=...' },
+  'fb.height_label': { is: 'Hæð (pixel)', en: 'Height (pixels)' },
+  'fb.save': { is: 'Vista', en: 'Save' },
+  'fb.delete': { is: 'Eyða', en: 'Delete' },
+  'fb.active': { is: 'Virkt', en: 'Active' },
+  'fb.inactive': { is: 'Óvirkt', en: 'Hidden' },
+  'fb.empty': { is: 'Engar Facebook færslur enn. Bættu við fyrstu færsluna!', en: 'No Facebook posts yet. Add the first one!' },
+
+  // ── CONTACT ───────────────────────────────────────────────────
+  'contact.title': { is: 'Sambandsupplýsingar', en: 'Contact Details' },
+  'contact.subtitle': { is: 'Þessar upplýsingar birtast í sambandshluta vefsíðunnar.', en: 'These details appear in the contact section of the website.' },
+  'contact.phone': { is: 'Símanúmer', en: 'Phone number' },
+  'contact.email': { is: 'Netfang', en: 'Email address' },
+  'contact.facebook_url': { is: 'Facebook síðuslóð', en: 'Facebook page URL' },
+  'contact.location': { is: 'Staðsetning', en: 'Location' },
+  'contact.save': { is: 'Vista sambandsupplýsingar', en: 'Save contact details' },
+  'contact.saved': { is: 'Vistað!', en: 'Saved!' },
+
+  // ── MEDIA ─────────────────────────────────────────────────────
+  'media.title': { is: 'Myndabanki', en: 'Media Library' },
+  'media.subtitle': { is: 'Hér getur þú hlaðið upp myndum og séð allar myndar á vefsíðunni.', en: 'Upload images and view all media used on the website.' },
+  'media.upload': { is: 'Hlaða upp mynd', en: 'Upload image' },
+  'media.empty': { is: 'Engar myndir enn. Hladdu upp fyrstu myndinni!', en: 'No images yet. Upload the first one!' },
+  'media.copy_url': { is: 'Afrita slóð', en: 'Copy URL' },
+  'media.copied': { is: 'Afritað!', en: 'Copied!' },
+  'media.delete': { is: 'Eyða', en: 'Delete' },
+  'media.confirm_delete': { is: 'Ertu viss um að eyða þessari mynd?', en: 'Are you sure you want to delete this image?' },
+
+  // ── SEO ───────────────────────────────────────────────────────
+  'seo.title': { is: 'SEO stillingar', en: 'SEO Settings' },
+  'seo.subtitle': { is: 'Stýrðu því hvernig vefsíðan lítur út í leitarvélum og á samfélagsmiðlum.', en: 'Control how the website appears in search engines and on social media.' },
+  'seo.page_title': { is: 'Titill síðu', en: 'Page title' },
+  'seo.meta_desc': { is: 'Meta lýsing', en: 'Meta description' },
+  'seo.og_image': { is: 'Mynd fyrir samfélagsmiðla (OG Image)', en: 'Social media image (OG Image)' },
+  'seo.save': { is: 'Vista SEO stillingar', en: 'Save SEO settings' },
+  'seo.saved': { is: 'Vistað!', en: 'Saved!' },
+
+  // ── CONFIRM DIALOG ─────────────────────────────────────────────
+  'confirm.publish.title': { is: 'Birta breytingar?', en: 'Publish changes?' },
+  'confirm.publish.body': { is: 'Þetta mun gera breytingarnar sýnilegar á lifandi vefsíðu strax. Ertu viss?', en: 'This will make your changes visible on the live website immediately. Are you sure?' },
+  'confirm.delete.title': { is: 'Eyða?', en: 'Delete?' },
+  'confirm.delete.body': { is: 'Þetta er óafturkræft. Ertu viss?', en: 'This cannot be undone. Are you sure?' },
+  'confirm.yes': { is: 'Já, halda áfram', en: 'Yes, continue' },
+  'confirm.cancel': { is: 'Hætta við', en: 'Cancel' },
+
+  // ── STATUS ────────────────────────────────────────────────────
+  'status.live': { is: 'Birt', en: 'Live' },
+  'status.draft': { is: 'Drög', en: 'Draft' },
+  'status.unsaved': { is: 'Óvistað', en: 'Unsaved' },
+
+  // ── GENERAL ───────────────────────────────────────────────────
+  'general.loading': { is: 'Hleður...', en: 'Loading...' },
+  'general.error': { is: 'Villa kom upp', en: 'An error occurred' },
+  'general.save': { is: 'Vista', en: 'Save' },
+  'general.cancel': { is: 'Hætta við', en: 'Cancel' },
+  'general.delete': { is: 'Eyða', en: 'Delete' },
+  'general.edit': { is: 'Breyta', en: 'Edit' },
+  'general.close': { is: 'Loka', en: 'Close' },
+  'general.back': { is: 'Til baka', en: 'Back' },
+};
+
+export default adminTranslations;

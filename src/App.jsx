@@ -13,6 +13,7 @@ import CandidateProfile from './components/CandidateProfile';
 import FacebookPosts from './components/FacebookPosts';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import CookiePolicy from './components/CookiePolicy';
+import AdminApp from './admin/AdminApp';
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -24,7 +25,6 @@ function ScrollToTop() {
         const timeoutId = window.setTimeout(() => {
           el.scrollIntoView({ behavior: 'smooth' });
         }, 100);
-
         return () => window.clearTimeout(timeoutId);
       }
     }
@@ -53,18 +53,29 @@ export default function App() {
     <BrowserRouter>
       <LanguageProvider>
         <ScrollToTop />
-        <div className="app">
-          <Header />
-          <main>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/frambjodandi/:slug" element={<CandidateProfile />} />
-              <Route path="/personuvernd" element={<PrivacyPolicy />} />
-              <Route path="/vafrakokur" element={<CookiePolicy />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
+        <Routes>
+          {/* ── Admin dashboard — its own layout, no public header/footer ── */}
+          <Route path="/admin/*" element={<AdminApp />} />
+
+          {/* ── Public site ── */}
+          <Route
+            path="*"
+            element={
+              <div className="app">
+                <Header />
+                <main>
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/frambjodandi/:slug" element={<CandidateProfile />} />
+                    <Route path="/personuvernd" element={<PrivacyPolicy />} />
+                    <Route path="/vafrakokur" element={<CookiePolicy />} />
+                  </Routes>
+                </main>
+                <Footer />
+              </div>
+            }
+          />
+        </Routes>
       </LanguageProvider>
     </BrowserRouter>
   );

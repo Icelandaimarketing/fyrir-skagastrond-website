@@ -1761,9 +1761,94 @@ ul, ol {
   }
 }
 
+/* Q&A Section */
+.candidate-profile__qa-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-sm);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.candidate-profile__qa-subtitle {
+  font-size: 0.9375rem;
+  color: var(--ink-muted);
+  max-width: 720px;
+  margin: 0 auto var(--space-xl);
+}
+
+.candidate-profile__qa-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .candidate-profile__qa-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.candidate-profile__qa-card {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.candidate-profile__qa-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Priority question cards span full width */
+.candidate-profile__qa-card:nth-child(6),
+.candidate-profile__qa-card:nth-child(7) {
+  grid-column: 1 / -1;
+}
+
+.candidate-profile__qa-question {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.candidate-profile__qa-icon {
+  flex-shrink: 0;
+  color: var(--blue);
+  opacity: 0.7;
+}
+
+.candidate-profile__qa-answer {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--ink-light);
+  white-space: pre-line;
+}
+
 /* ============================================
    LANGUAGE SWITCHER
    ============================================ */
+
 .lang-switcher {
   position: relative;
 }

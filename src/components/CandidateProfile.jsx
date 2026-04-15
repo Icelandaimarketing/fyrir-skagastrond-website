@@ -1,19 +1,31 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Users } from 'lucide-react';
+import { ArrowLeft, Users, MessageCircle, MapPin, Star, Tv, Pizza, Clock } from 'lucide-react';
 import { getCandidateBySlug, candidates } from '../data/candidates';
 import { useTranslation } from '../i18n/useTranslation';
+import qa from '../data/candidateQA';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
 };
 
+const QA_ITEMS = [
+  { key: 'fritimi',     labelKey: 'qa.q.fritimi',     icon: Clock },
+  { key: 'pizza',       labelKey: 'qa.q.pizza',       icon: Pizza },
+  { key: 'netflix',     labelKey: 'qa.q.netflix',     icon: Tv },
+  { key: 'samstarf',    labelKey: 'qa.q.samstarf',    icon: Users },
+  { key: 'uppahald',    labelKey: 'qa.q.uppahald',    icon: MapPin },
+  { key: 'kjortimabil', labelKey: 'qa.q.kjortimabil', icon: Star },
+  { key: 'annad',       labelKey: 'qa.q.annad',       icon: MessageCircle },
+];
+
 export default function CandidateProfile() {
   const { slug } = useParams();
   const candidate = getCandidateBySlug(slug);
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
+  const candidateQA = qa[slug] || null;
 
   if (!candidate) {
     return (
@@ -35,6 +47,8 @@ export default function CandidateProfile() {
 
   return (
     <div style={{ paddingTop: 'var(--header-height)' }}>
+
+      {/* ── HERO ── */}
       <section className="candidate-profile__hero">
         <div className="candidate-profile__hero-bg" />
         <div className="container candidate-profile__hero-inner">
@@ -61,8 +75,11 @@ export default function CandidateProfile() {
         </div>
       </section>
 
+      {/* ── BIO + Q&A ── */}
       <section className="section section--sky">
         <div className="container">
+
+          {/* Bio card */}
           <motion.div className="candidate-profile__bio-card" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
             <div className="candidate-profile__bio-header">
               <Users size={20} />
@@ -79,6 +96,50 @@ export default function CandidateProfile() {
             </div>
           </motion.div>
 
+          {/* Q&A section */}
+          {candidateQA && (
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              style={{ marginTop: '2.5rem' }}
+            >
+              <div className="candidate-profile__qa-header">
+                <MessageCircle size={20} />
+                <span>{t('qa.section.title')}</span>
+              </div>
+              <p className="candidate-profile__qa-subtitle">{t('qa.section.subtitle')}</p>
+
+              <div className="candidate-profile__qa-grid">
+                {QA_ITEMS.map(({ key, labelKey, icon: Icon }, i) => {
+                  const answer = candidateQA[key];
+                  if (!answer) return null;
+                  const text = answer[lang] || answer['en'] || answer['is'];
+                  return (
+                    <motion.div
+                      key={key}
+                      className="candidate-profile__qa-card"
+                      variants={fadeUp}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: i * 0.07 }}
+                    >
+                      <div className="candidate-profile__qa-question">
+                        <Icon size={16} className="candidate-profile__qa-icon" />
+                        <span>{t(labelKey)}</span>
+                      </div>
+                      <p className="candidate-profile__qa-answer">{text}</p>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Prev / Next navigation */}
           <motion.div className="candidate-profile__nav" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
             {prev && (
               <Link to={`/frambjodandi/${prev.slug}`} className="candidate-profile__nav-link candidate-profile__nav-link--prev">
@@ -100,6 +161,7 @@ export default function CandidateProfile() {
               </Link>
             )}
           </motion.div>
+
         </div>
       </section>
     </div>
