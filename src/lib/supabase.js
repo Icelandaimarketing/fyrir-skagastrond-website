@@ -1,15 +1,13 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Public keys — safe to hardcode (anon key is read-only by design)
-const supabaseUrl =
-  import.meta.env.VITE_SUPABASE_URL ||
-  'https://yestlkukcdjlrtvxugkg.supabase.co';
+const supabaseUrl = 'https://yestlkukcdjlrtvxugkg.supabase.co';
 
-const supabaseAnonKey =
+// Publishable key — safe for client-side use (replaces legacy anon key)
+const supabasePublishableKey =
   import.meta.env.VITE_SUPABASE_ANON_KEY ||
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inllc3Rsa3VrY2RqbHJ0dnh1Z2tnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNjI3OTAsImV4cCI6MjA5MTgzODc5MH0.J4_OAHHUFAsTlD18LW-9co7GOaIMP0QGtnPVrZ-2QfA';
+  'sb_publishable_OhlRfhCrs0AjE8CS7F6v8g_UXflDfKl';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+export const supabase = createClient(supabaseUrl, supabasePublishableKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
