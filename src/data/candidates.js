@@ -1,11 +1,13 @@
-// Candidate data with multilingual roles and bios
+// Candidate data — images served from Supabase Storage (candidate-photos bucket)
+const STORAGE = 'https://yestlkukcdjlrtvxugkg.supabase.co/storage/v1/object/public/candidate-photos';
+
 export const candidates = [
   {
     nr: 1,
     name: 'Vigdís Elva Þorgeirsdóttir',
     roleKey: 'candidate.1.role',
     bioKey: 'candidate.1.bio',
-    image: '/Vigdís.jpg',
+    image: `${STORAGE}/vigdis.jpg`,
     slug: 'vigdis',
   },
   {
@@ -13,7 +15,7 @@ export const candidates = [
     name: 'Ragnar Rögnvaldsson',
     roleKey: 'candidate.2.role',
     bioKey: 'candidate.2.bio',
-    image: '/Ragnar.jpg',
+    image: `${STORAGE}/ragnar.jpg`,
     slug: 'ragnar',
   },
   {
@@ -21,7 +23,7 @@ export const candidates = [
     name: 'Ástrós Elísdóttir',
     roleKey: 'candidate.3.role',
     bioKey: 'candidate.3.bio',
-    image: '/Ástrós.jpg',
+    image: `${STORAGE}/astros.jpg`,
     slug: 'astros',
   },
   {
@@ -29,7 +31,7 @@ export const candidates = [
     name: 'Jóhann Guðbjartur Sigurjónsson',
     roleKey: 'candidate.4.role',
     bioKey: 'candidate.4.bio',
-    image: '/Jóhann.jpg',
+    image: `${STORAGE}/johann.jpg`,
     slug: 'johann',
   },
   {
@@ -37,7 +39,7 @@ export const candidates = [
     name: 'Halla María Þórðardóttir',
     roleKey: 'candidate.5.role',
     bioKey: 'candidate.5.bio',
-    image: '/Halla.jpg',
+    image: `${STORAGE}/halla.jpg`,
     slug: 'halla',
   },
   {
@@ -45,7 +47,8 @@ export const candidates = [
     name: 'Patrik Snær Bjarnason',
     roleKey: 'candidate.6.role',
     bioKey: 'candidate.6.bio',
-    image: '/Patrik.jpg',
+    // Photo pending — placeholder until received
+    image: `${STORAGE}/vigdis.jpg`,
     slug: 'patrik',
   },
   {
@@ -53,15 +56,15 @@ export const candidates = [
     name: 'Eva Dís Gunnarsdóttir',
     roleKey: 'candidate.7.role',
     bioKey: 'candidate.7.bio',
-    image: '/Eva Dís.jpg',
+    image: `${STORAGE}/eva-dis.jpg`,
     slug: 'eva-dis',
   },
   {
     nr: 8,
-    name: 'Andri Már Welding',
+    name: 'Andri Már Welding Hákonarson',
     roleKey: 'candidate.8.role',
     bioKey: 'candidate.8.bio',
-    image: '/Andri.jpg',
+    image: `${STORAGE}/andri.jpg`,
     slug: 'andri',
   },
   {
@@ -69,7 +72,7 @@ export const candidates = [
     name: 'Daniela Esmeralda Ortega',
     roleKey: 'candidate.9.role',
     bioKey: 'candidate.9.bio',
-    image: '/Daniela.jpg',
+    image: `${STORAGE}/daniela.jpg`,
     slug: 'daniela',
   },
   {
@@ -77,7 +80,7 @@ export const candidates = [
     name: 'Ágúst Óðinn Ómarsson',
     roleKey: 'candidate.10.role',
     bioKey: 'candidate.10.bio',
-    image: '/Ágúst.jpg',
+    image: `${STORAGE}/agust.jpg`,
     slug: 'agust',
   },
 ];
