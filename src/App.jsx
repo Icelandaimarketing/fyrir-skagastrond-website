@@ -34,6 +34,16 @@ function ScrollToTop() {
   return null;
 }
 
+function PublicLayout({ children }) {
+  return (
+    <div className="app">
+      <Header />
+      <main>{children}</main>
+      <Footer />
+    </div>
+  );
+}
+
 function HomePage() {
   return (
     <>
@@ -54,25 +64,40 @@ export default function App() {
       <LanguageProvider>
         <ScrollToTop />
         <Routes>
-          {/* ── Admin dashboard — its own layout, no public header/footer ── */}
+          {/* ── Admin dashboard — its own layout ── */}
           <Route path="/admin/*" element={<AdminApp />} />
 
-          {/* ── Public site ── */}
+          {/* ── Public pages ── */}
           <Route
-            path="*"
+            path="/"
             element={
-              <div className="app">
-                <Header />
-                <main>
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/frambjodandi/:slug" element={<CandidateProfile />} />
-                    <Route path="/personuvernd" element={<PrivacyPolicy />} />
-                    <Route path="/vafrakokur" element={<CookiePolicy />} />
-                  </Routes>
-                </main>
-                <Footer />
-              </div>
+              <PublicLayout>
+                <HomePage />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/frambjodandi/:slug"
+            element={
+              <PublicLayout>
+                <CandidateProfile />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/personuvernd"
+            element={
+              <PublicLayout>
+                <PrivacyPolicy />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/vafrakokur"
+            element={
+              <PublicLayout>
+                <CookiePolicy />
+              </PublicLayout>
             }
           />
         </Routes>
