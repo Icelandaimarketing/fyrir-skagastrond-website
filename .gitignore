@@ -36,3 +36,7 @@ yarn-error.log*
 
 # Local Netlify folder
 .netlify
+
+# Server-only scripts (may reference env vars / service keys)
+upload-*.mjs
+scripts/
