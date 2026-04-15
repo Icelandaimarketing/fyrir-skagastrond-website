@@ -47,7 +47,7 @@ export const candidates = [
     name: 'Patrik Snær Bjarnason',
     roleKey: 'candidate.6.role',
     bioKey: 'candidate.6.bio',
-    image: `${STORAGE}/andri.jpg`,
+    image: `${STORAGE}/patrik.jpg`,
     slug: 'patrik',
   },
   {
@@ -63,8 +63,7 @@ export const candidates = [
     name: 'Andri Már Welding Hákonarson',
     roleKey: 'candidate.8.role',
     bioKey: 'candidate.8.bio',
-    // Photo pending — placeholder until received
-    image: `${STORAGE}/vigdis.jpg`,
+    image: `${STORAGE}/andri.jpg`,
     slug: 'andri',
   },
   {

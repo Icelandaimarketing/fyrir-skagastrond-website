@@ -11,7 +11,7 @@ const fadeUp = {
 const FACEBOOK_POSTS = [
   {
     src: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid035eWeaEpe9sGDUueiFuAn5SDa6VUXRkQHBioV3f4G1nTcjeMVkaW3XZmncSemVXkQl%26id%3D61576485865769&show_text=true&width=500',
-    height: 350,
+    height: 700,
   },
   {
     src: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02LwQdoKvYsmMp3gEbRaa2fpYkAcYa6KQaNfjUjW2pegjVbEcEMsJwfahE4AARsSTPl%26id%3D61576485865769&show_text=true&width=500',

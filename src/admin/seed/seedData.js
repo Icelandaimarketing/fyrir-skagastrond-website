@@ -5,22 +5,22 @@ const LANGS = ['is', 'en', 'es', 'pl', 'de', 'da', 'no'];
 const SUPABASE_STORAGE_BASE = 'https://yestlkukcdjlrtvxugkg.supabase.co/storage/v1/object/public/candidate-photos';
 
 const CANDIDATES_RAW = [
-  { nr: 1,  name: 'Vigdís Elva Þorgeirsdóttir',       slug: 'vigdis',   image_url: `${SUPABASE_STORAGE_BASE}/vigdis.jpg` },
-  { nr: 2,  name: 'Ragnar Rögnvaldsson',               slug: 'ragnar',   image_url: `${SUPABASE_STORAGE_BASE}/ragnar.jpg` },
-  { nr: 3,  name: 'Ástrós Elísdóttir',                 slug: 'astros',   image_url: `${SUPABASE_STORAGE_BASE}/astros.jpg` },
-  { nr: 4,  name: 'Jóhann Guðbjartur Sigurjónsson',   slug: 'johann',   image_url: `${SUPABASE_STORAGE_BASE}/johann.jpg` },
-  { nr: 5,  name: 'Halla María Þórðardóttir',          slug: 'halla',    image_url: `${SUPABASE_STORAGE_BASE}/halla.jpg` },
-  { nr: 6,  name: 'Patrik Snær Bjarnason',             slug: 'patrik',   image_url: null },  // Photos arriving soon
-  { nr: 7,  name: 'Eva Dís Gunnarsdóttir',             slug: 'eva-dis',  image_url: `${SUPABASE_STORAGE_BASE}/eva-dis.jpg` },
-  { nr: 8,  name: 'Andri Már Welding',                 slug: 'andri',    image_url: `${SUPABASE_STORAGE_BASE}/andri.jpg` },
-  { nr: 9,  name: 'Daniela Esmeralda Ortega',          slug: 'daniela',  image_url: `${SUPABASE_STORAGE_BASE}/daniela.jpg` },
-  { nr: 10, name: 'Ágúst Óðinn Ómarsson',              slug: 'agust',    image_url: `${SUPABASE_STORAGE_BASE}/agust.jpg` },
+  { nr: 1, name: 'Vigdís Elva Þorgeirsdóttir', slug: 'vigdis', image_url: `${SUPABASE_STORAGE_BASE}/vigdis.jpg` },
+  { nr: 2, name: 'Ragnar Rögnvaldsson', slug: 'ragnar', image_url: `${SUPABASE_STORAGE_BASE}/ragnar.jpg` },
+  { nr: 3, name: 'Ástrós Elísdóttir', slug: 'astros', image_url: `${SUPABASE_STORAGE_BASE}/astros.jpg` },
+  { nr: 4, name: 'Jóhann Guðbjartur Sigurjónsson', slug: 'johann', image_url: `${SUPABASE_STORAGE_BASE}/johann.jpg` },
+  { nr: 5, name: 'Halla María Þórðardóttir', slug: 'halla', image_url: `${SUPABASE_STORAGE_BASE}/halla.jpg` },
+  { nr: 6, name: 'Patrik Snær Bjarnason', slug: 'patrik', image_url: null },  // Photos arriving soon
+  { nr: 7, name: 'Eva Dís Gunnarsdóttir', slug: 'eva-dis', image_url: `${SUPABASE_STORAGE_BASE}/eva-dis.jpg` },
+  { nr: 8, name: 'Andri Már Welding', slug: 'andri', image_url: `${SUPABASE_STORAGE_BASE}/andri.jpg` },
+  { nr: 9, name: 'Daniela Esmeralda Ortega', slug: 'daniela', image_url: `${SUPABASE_STORAGE_BASE}/daniela.jpg` },
+  { nr: 10, name: 'Ágúst Óðinn Ómarsson', slug: 'agust', image_url: `${SUPABASE_STORAGE_BASE}/agust.jpg` },
 ];
 
 const FACEBOOK_POSTS_RAW = [
   {
     embed_url: 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid035eWeaEpe9sGDUueiFuAn5SDa6VUXRkQHBioV3f4G1nTcjeMVkaW3XZmncSemVXkQl%26id%3D61576485865769&show_text=true&width=500',
-    height: 350,
+    height: 700,
     sort_order: 0,
   },
   {
