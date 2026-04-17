@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from '../i18n/useTranslation';
+import { usePublicData } from '../context/PublicDataContext';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -24,6 +25,8 @@ const PARTICLES = [
 
 export default function Hero() {
   const { t } = useTranslation();
+  const { settings } = usePublicData();
+  const heroImage = settings?.hero_image_url || '/Group images/29.jpg';
 
   const stats = [
     ['10', t('hero.stat.candidates')],
@@ -57,8 +60,6 @@ export default function Hero() {
           animate="visible"
           transition={{ duration: 0.7 }}
         >
-          <span className="badge badge--ghost">{t('hero.badge')}</span>
-
           <div className="hero__wordmark">
             <span className="hero__wordmark-prefix">Fyrir</span>
             <span className="hero__wordmark-main">Skagaströnd</span>
@@ -96,7 +97,12 @@ export default function Hero() {
         >
           <div className="hero__brand-card">
             <div className="hero__brand-photo">
-              <img src="/Spákonufell.jpg" alt="Spákonufell við sólsetur" className="hero__brand-photo-img" />
+              <img
+                src={heroImage}
+                alt="Fyrir Skagastrond"
+                className="hero__brand-photo-img"
+                onError={(event) => { event.currentTarget.src = '/Group images/29.jpg'; }}
+              />
               <div className="hero__brand-photo-overlay" />
             </div>
             <div className="hero__brand-info">

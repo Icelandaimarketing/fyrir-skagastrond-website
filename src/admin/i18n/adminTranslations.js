@@ -20,6 +20,8 @@ const adminTranslations = {
   'nav.media': { is: 'Myndabanki', en: 'Media Library' },
   'nav.facebook': { is: 'Facebook færslur', en: 'Facebook Posts' },
   'nav.contact': { is: 'Sambandsupplýsingar', en: 'Contact Details' },
+  'nav.banner': { is: 'Skroll banner', en: 'Scrolling Banner' },
+  'nav.pages': { is: 'Málefnasíður', en: 'Policy Pages' },
   'nav.seo': { is: 'SEO stillingar', en: 'SEO Settings' },
   'nav.users': { is: 'Notendur', en: 'Users' },
 

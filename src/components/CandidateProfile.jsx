@@ -2,9 +2,8 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Users, MessageCircle, MapPin, Star, Tv, Utensils, Clock } from 'lucide-react';
-import { getCandidateBySlug, candidates } from '../data/candidates';
 import { useTranslation } from '../i18n/useTranslation';
-import qa from '../data/candidateQA';
+import { usePublicData } from '../context/PublicDataContext';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -23,9 +22,10 @@ const QA_ITEMS = [
 
 export default function CandidateProfile() {
   const { slug } = useParams();
-  const candidate = getCandidateBySlug(slug);
+  const { candidates } = usePublicData();
+  const candidate = candidates.find(c => c.slug === slug) || null;
   const { t, lang } = useTranslation();
-  const candidateQA = qa[slug] || null;
+  const candidateQA = candidate?.qa || null;
 
   if (!candidate) {
     return (
@@ -60,7 +60,20 @@ export default function CandidateProfile() {
 
           <div className="candidate-profile__hero-content">
             <motion.div className="candidate-profile__photo-wrap" variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.6 }}>
-              <img src={candidate.image} alt={candidate.name} className="candidate-profile__photo" />
+              <img
+                src={candidate.primary_image_url || candidate.image_url || candidate.image}
+                alt={candidate.name}
+                className="candidate-profile__photo"
+                onError={(event) => {
+                  const fallback = candidate.fallback_image_url || '/F Skagastrond.jpg';
+                  if (event.currentTarget.dataset.fallbackApplied) {
+                    event.currentTarget.src = '/F Skagastrond.jpg';
+                    return;
+                  }
+                  event.currentTarget.dataset.fallbackApplied = 'true';
+                  event.currentTarget.src = fallback;
+                }}
+              />
               <div className="candidate-profile__number">{candidate.nr}</div>
             </motion.div>
 
@@ -69,7 +82,7 @@ export default function CandidateProfile() {
                 {candidate.nr === 1 ? t('profile.oddviti') : `${t('profile.nr')} ${candidate.nr} ${t('profile.onlist')}`}
               </span>
               <h1 className="candidate-profile__name">{candidate.name}</h1>
-              <p className="candidate-profile__role">{t(candidate.roleKey)}</p>
+              <p className="candidate-profile__role">{candidate.role?.[lang] || candidate.role?.is || t(candidate.roleKey)}</p>
             </motion.div>
           </div>
         </div>
@@ -85,7 +98,7 @@ export default function CandidateProfile() {
               <Users size={20} />
               <span>{t('profile.about')}</span>
             </div>
-            <p className="candidate-profile__bio-text">{t(candidate.bioKey)}</p>
+            <p className="candidate-profile__bio-text">{candidate.bio?.[lang] || candidate.bio?.is || t(candidate.bioKey)}</p>
 
             <div className="candidate-profile__core">
               <img src="/F Skagastrond.jpg" alt="Fyrir Skagaströnd" className="candidate-profile__core-logo" />

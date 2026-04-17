@@ -52,6 +52,9 @@ export default function Header() {
               </a>
             ))}
             <LanguageSwitcher />
+            <Link to="/admin" className="header__admin-link">
+              {t('nav.admin')}
+            </Link>
             <a href="/#samband" className="header__nav-cta">X við K</a>
           </nav>
 
@@ -80,6 +83,9 @@ export default function Header() {
         <a href="/#samband" className="mobile-menu__cta" onClick={() => setMenuOpen(false)}>
           X við K
         </a>
+        <Link to="/admin" className="mobile-menu__admin" onClick={() => setMenuOpen(false)}>
+          {t('nav.admin')}
+        </Link>
       </div>
     </>
   );

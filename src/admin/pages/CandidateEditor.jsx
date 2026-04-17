@@ -5,6 +5,7 @@ import { useAdminLang } from '../context/AdminLangContext';
 import ImageUploader from '../components/ImageUploader';
 import ConfirmDialog from '../components/ConfirmDialog';
 import toast from 'react-hot-toast';
+import { getCandidateFallbackImage } from '../../data/candidateImageFallbacks';
 
 const LANGS = [
   { code: 'is', label: 'IS', flag: '🇮🇸', full: 'Íslenska' },
@@ -29,17 +30,20 @@ export default function CandidateEditor() {
   const [activeTab, setActiveTab] = useState('is');
   const [activeField, setActiveField] = useState('role'); // 'role' | 'bio'
   const [imageUrl, setImageUrl] = useState('');
+  const [gallery, setGallery] = useState([]);
 
   useEffect(() => {
     async function load() {
       const { data, error } = await supabase
         .from('candidates')
-        .select(`*, candidate_translations(*)`)
+        .select(`*, candidate_translations(*), candidate_images(*)`)
         .eq('slug', slug)
         .single();
       if (!error && data) {
         setCandidate(data);
-        setImageUrl(data.image_url || '');
+        const images = [...(data.candidate_images || [])].sort((a, b) => Number(b.is_primary) - Number(a.is_primary) || (a.sort_order || 0) - (b.sort_order || 0));
+        setGallery(images);
+        setImageUrl(images.find(img => img.is_primary)?.url || data.image_url || '');
         const t = {};
         const d = {};
         data.candidate_translations?.forEach(tr => {
@@ -106,6 +110,15 @@ export default function CandidateEditor() {
       // Update image if changed
       if (imageUrl && imageUrl !== candidate.image_url) {
         await supabase.from('candidates').update({ image_url: imageUrl }).eq('id', cand.id);
+        await supabase.from('candidate_images').upsert({
+          candidate_id: cand.id,
+          storage_path: `${candidate.slug}/profile.jpg`,
+          url: imageUrl,
+          alt_text: candidate.name,
+          sort_order: 0,
+          is_primary: true,
+          is_published: true,
+        }, { onConflict: 'candidate_id,storage_path' });
       }
       setTranslations(prev => {
         const n = {};
@@ -126,6 +139,7 @@ export default function CandidateEditor() {
   const currentDraft = draftTrans[activeTab] || {};
   const currentLive = translations[activeTab] || {};
   const isLead = candidate.nr === 1;
+  const fallbackImageUrl = getCandidateFallbackImage(candidate.slug);
 
   return (
     <div className="admin-page" style={{ maxWidth: '900px' }}>
@@ -177,10 +191,24 @@ export default function CandidateEditor() {
             <div className="admin-card__body">
               <ImageUploader
                 bucket="candidate-photos"
-                path={`${candidate.slug}.jpg`}
-                currentUrl={imageUrl}
+                path={`${candidate.slug}/profile.jpg`}
+                currentUrl={imageUrl || fallbackImageUrl}
+                fallbackUrl={fallbackImageUrl}
                 onUploaded={(url) => setImageUrl(url)}
               />
+              {gallery.length > 0 && (
+                <div className="admin-gallery-strip">
+                  {gallery.map(image => (
+                    <img
+                      key={image.id}
+                      src={image.url}
+                      alt={image.alt_text || candidate.name}
+                      className={`admin-gallery-thumb ${image.is_primary ? 'active' : ''}`}
+                      onError={event => { event.currentTarget.src = fallbackImageUrl; }}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="admin-card" style={{ marginTop: '1rem' }}>

@@ -12,7 +12,7 @@ import { useAdminLang } from '../context/AdminLangContext';
  *   onUploaded  {fn}      — (publicUrl: string) => void
  *   accept      {string}  — file accept types (default 'image/jpeg,image/png,image/webp')
  */
-export default function ImageUploader({ bucket = 'candidate-photos', path, currentUrl, onUploaded, accept = 'image/jpeg,image/png,image/webp' }) {
+export default function ImageUploader({ bucket = 'candidate-photos', path, currentUrl, fallbackUrl = '/F Skagastrond.jpg', onUploaded, accept = 'image/jpeg,image/png,image/webp' }) {
   const { lang } = useAdminLang();
   const inputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
@@ -62,6 +62,14 @@ export default function ImageUploader({ bucket = 'candidate-photos', path, curre
               objectFit: 'cover',
               borderRadius: '10px',
               border: '1px solid var(--admin-border)',
+            }}
+            onError={(event) => {
+              if (event.currentTarget.dataset.fallbackApplied) {
+                event.currentTarget.src = '/F Skagastrond.jpg';
+                return;
+              }
+              event.currentTarget.dataset.fallbackApplied = 'true';
+              event.currentTarget.src = fallbackUrl;
             }}
           />
         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAdminAuth } from './context/AdminAuthContext';
 import { useAdminLang } from './context/AdminLangContext';
+import { isSupabaseConfigured } from '../lib/supabase';
 import './admin.css';
 
 export default function AdminLogin() {
@@ -16,9 +17,12 @@ export default function AdminLogin() {
     setError('');
     setLoading(true);
     try {
+      if (!isSupabaseConfigured) {
+        throw new Error('Supabase is not configured');
+      }
       await signIn(email, password);
     } catch (err) {
-      setError(t('login.error'));
+      setError(isSupabaseConfigured ? t('login.error') : (lang === 'is' ? 'Supabase stillingar vantar' : 'Missing Supabase configuration'));
     } finally {
       setLoading(false);
     }

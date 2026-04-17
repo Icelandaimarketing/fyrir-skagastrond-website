@@ -39,4 +39,8 @@ yarn-error.log*
 
 # Server-only scripts (may reference env vars / service keys)
 upload-*.mjs
+maintenance-*.mjs
 scripts/
+
+# Local agent notes
+CODEX_PROJECT_WORKING_NOTES.md

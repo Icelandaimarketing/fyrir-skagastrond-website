@@ -13,10 +13,12 @@ import FacebookManager from './pages/FacebookManager';
 import ContactEditor from './pages/ContactEditor';
 import SEOEditor from './pages/SEOEditor';
 import MediaLibrary from './pages/MediaLibrary';
+import BannerManager from './pages/BannerManager';
+import PagesManager from './pages/PagesManager';
 import './admin.css';
 
 function ProtectedRoutes() {
-  const { user, loading } = useAdminAuth();
+  const { user, profile, authError, loading, signOut } = useAdminAuth();
 
   if (loading) {
     return (
@@ -34,6 +36,30 @@ function ProtectedRoutes() {
 
   if (!user) return <Navigate to="/admin/login" replace />;
 
+  if (!profile) {
+    return (
+      <div className="admin-root" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '2rem' }}>
+        <div className="admin-card" style={{ maxWidth: '520px', width: '100%' }}>
+          <div className="admin-card__body" style={{ textAlign: 'center' }}>
+            <div className="admin-dialog__icon" style={{ margin: '0 auto 1.25rem' }}>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <h1 className="admin-login__title">Admin access is not enabled</h1>
+            <p className="admin-login__subtitle" style={{ lineHeight: 1.6 }}>
+              This account is authenticated, but it is not listed in <code>admin_profiles</code>.
+              {authError ? ` ${authError}` : ''}
+            </p>
+            <button className="admin-btn admin-btn--primary" onClick={signOut}>
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <AdminLayout>
       <Routes>
@@ -43,6 +69,8 @@ function ProtectedRoutes() {
         <Route path="candidates/:slug" element={<CandidateEditor />} />
         <Route path="facebook" element={<FacebookManager />} />
         <Route path="contact" element={<ContactEditor />} />
+        <Route path="banner" element={<BannerManager />} />
+        <Route path="pages" element={<PagesManager />} />
         <Route path="seo" element={<SEOEditor />} />
         <Route path="media" element={<MediaLibrary />} />
         <Route path="*" element={<Navigate to="/admin" replace />} />

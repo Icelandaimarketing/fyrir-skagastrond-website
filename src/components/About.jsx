@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from '../i18n/useTranslation';
 
 const fadeUp = {
@@ -12,9 +13,9 @@ export default function About() {
   const { t } = useTranslation();
 
   const featureCards = [
-    { title: t('about.feature1.title'), text: t('about.feature1.text') },
-    { title: t('about.feature2.title'), text: t('about.feature2.text') },
-    { title: t('about.feature3.title'), text: t('about.feature3.text') },
+    { slug: 'gagnsaei-i-stjornun', title: t('about.feature1.title'), text: t('about.feature1.text') },
+    { slug: 'styrkja-innvidi', title: t('about.feature2.title'), text: t('about.feature2.text') },
+    { slug: 'atvinnuuppbygging', title: t('about.feature3.title'), text: t('about.feature3.text') },
   ];
 
   return (
@@ -22,6 +23,7 @@ export default function About() {
       <div className="container">
         <div className="about__grid">
           <motion.div
+            className="about__intro"
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
@@ -52,16 +54,19 @@ export default function About() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {featureCards.map((item, i) => (
-              <div key={i} className="card card--static about__feature-card">
+            {featureCards.map((item) => (
+              <Link key={item.slug} to={`/malefni/${item.slug}`} className="about__feature-card" aria-label={item.title}>
                 <div className="about__feature-inner">
+                  <div className="about__feature-logo">
+                    <img src="/F Skagastrond.jpg" alt="" />
+                  </div>
                   <div>
                     <h3 className="about__feature-title">{item.title}</h3>
                     <p className="about__feature-text">{item.text}</p>
                   </div>
                   <ChevronRight className="about__feature-icon" size={20} />
                 </div>
-              </div>
+              </Link>
             ))}
           </motion.div>
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
 import { useTranslation } from '../i18n/useTranslation';
+import { usePublicData } from '../context/PublicDataContext';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -10,11 +11,12 @@ const fadeUp = {
 
 export default function Contact() {
   const { t } = useTranslation();
+  const { contact } = usePublicData();
 
   const contactItems = [
-    { icon: Phone, label: t('contact.phone'), value: '891 7869', href: 'tel:+3548917869' },
-    { icon: Mail, label: t('contact.email'), value: 'xk.fyrirskagastrond@gmail.com', href: 'mailto:xk.fyrirskagastrond@gmail.com' },
-    { icon: MapPin, label: t('contact.location'), value: 'Skagaströnd, Ísland', href: null },
+    { icon: Phone, label: t('contact.phone'), value: contact.phone, href: `tel:+354${String(contact.phone || '').replace(/\D/g, '')}` },
+    { icon: Mail, label: t('contact.email'), value: contact.email, href: `mailto:${contact.email}` },
+    { icon: MapPin, label: t('contact.location'), value: contact.location, href: null },
   ];
 
   return (
@@ -35,10 +37,10 @@ export default function Contact() {
               <h2 className="contact__title">{t('contact.title')}</h2>
               <p className="contact__desc">{t('contact.desc')}</p>
               <div className="contact__actions">
-                <a href="https://www.facebook.com/profile.php?id=61576485865769" target="_blank" rel="noopener noreferrer" className="btn btn--red">
+                <a href={contact.facebook_url} target="_blank" rel="noopener noreferrer" className="btn btn--red">
                   <ExternalLink size={18} /> {t('contact.facebook')}
                 </a>
-                <a href="mailto:xk.fyrirskagastrond@gmail.com" className="btn btn--outline">
+                <a href={`mailto:${contact.email}`} className="btn btn--outline">
                   {t('contact.email.btn')}
                 </a>
               </div>
