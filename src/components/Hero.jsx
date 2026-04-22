@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from '../i18n/useTranslation';
 import { usePublicData } from '../context/PublicDataContext';
@@ -10,37 +10,42 @@ const fadeUp = {
 
 const PARTICLES = [
   { left: '12%', top: '10%', delay: '0s', duration: '11s' },
-  { left: '22%', top: '68%', delay: '1.1s', duration: '15s' },
   { left: '34%', top: '18%', delay: '2.2s', duration: '13s' },
-  { left: '46%', top: '82%', delay: '3.3s', duration: '16s' },
   { left: '58%', top: '30%', delay: '4.4s', duration: '12s' },
-  { left: '69%', top: '72%', delay: '5.5s', duration: '17s' },
   { left: '78%', top: '14%', delay: '6.6s', duration: '14s' },
-  { left: '86%', top: '58%', delay: '7.7s', duration: '18s' },
   { left: '17%', top: '42%', delay: '8.8s', duration: '10s' },
-  { left: '29%', top: '90%', delay: '9.9s', duration: '16s' },
   { left: '63%', top: '8%', delay: '11s', duration: '12s' },
-  { left: '91%', top: '36%', delay: '12.1s', duration: '15s' },
 ];
 
 export default function Hero() {
   const { t } = useTranslation();
   const { settings } = usePublicData();
   const heroImage = settings?.hero_image_url || '/Group images/29.jpg';
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
-  const stats = [
-    ['10', t('hero.stat.candidates')],
-    ['3', t('hero.stat.slogans')],
-    ['1', t('hero.stat.policy')],
-  ];
+  useEffect(() => {
+    if (!lightboxOpen) return undefined;
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setLightboxOpen(false);
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [lightboxOpen]);
 
   return (
     <section className="hero" id="heim">
       <div className="hero__bg-glow" aria-hidden="true" />
       <div className="hero__particles" aria-hidden="true">
-        {PARTICLES.map((particle, i) => (
+        {PARTICLES.map((particle, index) => (
           <div
-            key={i}
+            key={index}
             className="hero__particle"
             style={{
               left: particle.left,
@@ -60,15 +65,13 @@ export default function Hero() {
           animate="visible"
           transition={{ duration: 0.7 }}
         >
-          <div className="hero__wordmark">
-            <span className="hero__wordmark-prefix">Fyrir</span>
-            <span className="hero__wordmark-main">Skagaströnd</span>
-          </div>
-
           <h1 className="hero__headline">
-            {t('hero.headline.part1')}{' '}
-            <span className="hero__headline-accent">{t('hero.headline.accent')}</span>{' '}
-            {t('hero.headline.part3')}
+            <span className="hero__headline-brand">{t('brand.name')}</span>
+            <span className="hero__headline-line">
+              {t('hero.headline.part1')}{' '}
+              <span className="hero__headline-accent">{t('hero.headline.accent')}</span>{' '}
+              {t('hero.headline.part3')}
+            </span>
           </h1>
 
           <p className="hero__description">{t('hero.description')}</p>
@@ -78,13 +81,10 @@ export default function Hero() {
             <a href="#frambod" className="btn btn--outline">{t('hero.cta2')}</a>
           </div>
 
-          <div className="hero__stats">
-            {stats.map(([value, label]) => (
-              <div key={label} className="hero__stat">
-                <div className="hero__stat-value">{value}</div>
-                <div className="hero__stat-label">{label}</div>
-              </div>
-            ))}
+          <div className="hero__trust-line" aria-label={t('hero.trustLineAria')}>
+            <span>10 {t('hero.stat.candidates')}</span>
+            <span>{t('hero.stat.policy')}</span>
+            <span>{t('about.core.slogan')}</span>
           </div>
         </motion.div>
 
@@ -96,27 +96,42 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.15 }}
         >
           <div className="hero__brand-card">
-            <div className="hero__brand-photo">
+            <button
+              type="button"
+              className="hero__brand-photo"
+              onClick={() => setLightboxOpen(true)}
+              aria-label={t('hero.image.open')}
+            >
               <img
                 src={heroImage}
-                alt="Fyrir Skagastrond"
+                alt={t('brand.name')}
                 className="hero__brand-photo-img"
+                fetchPriority="high"
                 onError={(event) => { event.currentTarget.src = '/Group images/29.jpg'; }}
               />
               <div className="hero__brand-photo-overlay" />
-            </div>
-            <div className="hero__brand-info">
-              <div className="hero__brand-logo">
-                <img src="/F Skagastrond.jpg" alt="Fyrir Skagaströnd merki" className="hero__brand-logo-img" />
-              </div>
-              <div>
-                <div className="hero__brand-label">Fyrir Skagaströnd</div>
-                <div className="hero__brand-slogan">{t('hero.brand.slogan')}</div>
-              </div>
-            </div>
+              <span className="hero__image-hint">{t('hero.image.hint')}</span>
+            </button>
           </div>
         </motion.div>
       </div>
+
+      {lightboxOpen && (
+        <div
+          className="image-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t('hero.image.dialog')}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setLightboxOpen(false);
+          }}
+        >
+          <button type="button" className="image-lightbox__close" onClick={() => setLightboxOpen(false)}>
+            {t('hero.image.close')}
+          </button>
+          <img src={heroImage} alt={t('brand.name')} className="image-lightbox__image" />
+        </div>
+      )}
     </section>
   );
 }

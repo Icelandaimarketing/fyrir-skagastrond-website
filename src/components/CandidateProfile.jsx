@@ -1,31 +1,41 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Users, MessageCircle, MapPin, Star, Tv, Utensils, Clock } from 'lucide-react';
+import {
+  ArrowLeft,
+  MessageCircle,
+  Tv,
+  Utensils,
+  Users,
+  Clock,
+} from 'lucide-react';
 import { useTranslation } from '../i18n/useTranslation';
 import { usePublicData } from '../context/PublicDataContext';
+import candidateQa from '../data/candidateQaContent';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
 };
 
-const QA_ITEMS = [
-  { key: 'fritimi',     labelKey: 'qa.q.fritimi',     icon: Clock },
-  { key: 'pizza',       labelKey: 'qa.q.pizza',       icon: Utensils },
-  { key: 'netflix',     labelKey: 'qa.q.netflix',     icon: Tv },
-  { key: 'samstarf',    labelKey: 'qa.q.samstarf',    icon: Users },
-  { key: 'uppahald',    labelKey: 'qa.q.uppahald',    icon: MapPin },
-  { key: 'kjortimabil', labelKey: 'qa.q.kjortimabil', icon: Star },
-  { key: 'annad',       labelKey: 'qa.q.annad',       icon: MessageCircle },
+const PERSONAL_QA_ITEMS = [
+  { key: 'fritimi', labelKey: 'qa.q.fritimi', icon: Clock },
+  { key: 'pizza', labelKey: 'qa.q.pizza', icon: Utensils },
+  { key: 'netflix', labelKey: 'qa.q.netflix', icon: Tv },
+  { key: 'samstarf', labelKey: 'qa.q.samstarf', icon: Users },
 ];
+
+function getLocalized(entry, lang) {
+  if (!entry) return '';
+  return entry[lang] || entry.is || entry.en || '';
+}
 
 export default function CandidateProfile() {
   const { slug } = useParams();
   const { candidates } = usePublicData();
-  const candidate = candidates.find(c => c.slug === slug) || null;
   const { t, lang } = useTranslation();
-  const candidateQA = candidate?.qa || null;
+
+  const candidate = candidates.find((item) => item.slug === slug) || null;
 
   if (!candidate) {
     return (
@@ -41,28 +51,66 @@ export default function CandidateProfile() {
     );
   }
 
-  const currentIndex = candidates.findIndex(c => c.slug === slug);
+  const currentIndex = candidates.findIndex((item) => item.slug === slug);
   const prev = currentIndex > 0 ? candidates[currentIndex - 1] : null;
   const next = currentIndex < candidates.length - 1 ? candidates[currentIndex + 1] : null;
+  const candidateSource = candidateQa[candidate.slug] || {};
+
+  const displayName = getLocalized(candidateSource.nafn, lang) || candidate.name;
+  const priorities = getLocalized(candidateSource.kjortimabil, lang);
+  const extra = getLocalized(candidateSource.annad, lang);
+  const metaItems = [
+    {
+      key: 'aldur',
+      label: t('profile.meta.age'),
+      value: getLocalized(candidateSource.aldur, lang),
+    },
+    {
+      key: 'fjolskylda',
+      label: t('profile.meta.family'),
+      value: getLocalized(candidateSource.fjolskylda, lang),
+    },
+    {
+      key: 'uppahald',
+      label: t('profile.meta.favorite'),
+      value: getLocalized(candidateSource.uppahald, lang),
+    },
+  ].filter((item) => item.value);
+
+  const personalItems = PERSONAL_QA_ITEMS
+    .map(({ key, labelKey, icon }) => ({
+      key,
+      icon,
+      label: t(labelKey),
+      value: getLocalized(candidateSource[key], lang),
+    }))
+    .filter((item) => item.value);
+
+  const getCandidateName = (item) => getLocalized(candidateQa[item.slug]?.nafn, lang) || item.name;
 
   return (
-    <div style={{ paddingTop: 'var(--header-height)' }}>
-
-      {/* ── HERO ── */}
+    <div className="candidate-profile" style={{ paddingTop: 'var(--header-height)' }}>
       <section className="candidate-profile__hero">
         <div className="candidate-profile__hero-bg" />
         <div className="container candidate-profile__hero-inner">
-          <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.5 }}>
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.45 }}>
             <Link to="/#frambod" className="candidate-profile__back">
               <ArrowLeft size={18} /> {t('profile.back')}
             </Link>
           </motion.div>
 
-          <div className="candidate-profile__hero-content">
-            <motion.div className="candidate-profile__photo-wrap" variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.6 }}>
+          <div className="candidate-profile__hero-layout">
+            <motion.div
+              className="candidate-profile__portrait-panel"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.55 }}
+            >
+              <div className="candidate-profile__portrait-glow" />
               <img
                 src={candidate.primary_image_url || candidate.image_url || candidate.image}
-                alt={candidate.name}
+                alt={displayName}
                 className="candidate-profile__photo"
                 onError={(event) => {
                   const fallback = candidate.fallback_image_url || '/F Skagastrond.jpg';
@@ -77,47 +125,86 @@ export default function CandidateProfile() {
               <div className="candidate-profile__number">{candidate.nr}</div>
             </motion.div>
 
-            <motion.div className="candidate-profile__info" variants={fadeUp} initial="hidden" animate="visible" transition={{ duration: 0.6, delay: 0.1 }}>
-              <span className="badge badge--ghost">
-                {candidate.nr === 1 ? t('profile.oddviti') : `${t('profile.nr')} ${candidate.nr} ${t('profile.onlist')}`}
+            <motion.div
+              className="candidate-profile__hero-copy"
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.55, delay: 0.08 }}
+            >
+              <span className="candidate-profile__status">
+                {`${t('profile.nr')} ${candidate.nr} ${t('profile.onlist')}`}
               </span>
-              <h1 className="candidate-profile__name">{candidate.name}</h1>
-              <p className="candidate-profile__role">{candidate.role?.[lang] || candidate.role?.is || t(candidate.roleKey)}</p>
+              <h1 className="candidate-profile__name">{displayName}</h1>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ── BIO + Q&A ── */}
-      <section className="section section--sky">
-        <div className="container">
-
-          {/* Bio card */}
-          <motion.div className="candidate-profile__bio-card" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5 }}>
-            <div className="candidate-profile__bio-header">
-              <Users size={20} />
-              <span>{t('profile.about')}</span>
-            </div>
-            <p className="candidate-profile__bio-text">{candidate.bio?.[lang] || candidate.bio?.is || t(candidate.bioKey)}</p>
-
-            <div className="candidate-profile__core">
-              <img src="/F Skagastrond.jpg" alt="Fyrir Skagaströnd" className="candidate-profile__core-logo" />
-              <div>
-                <div className="candidate-profile__core-label">{t('profile.policy')}</div>
-                <div className="candidate-profile__core-slogan">{t('about.core.slogan')}</div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Q&A section */}
-          {candidateQA && (
-            <motion.div
+      <section className="section section--sky section--soft-top candidate-profile__body">
+        <div className="container candidate-profile__content">
+          {!!metaItems.length && (
+            <motion.section
+              className="candidate-profile__facts"
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              style={{ marginTop: '2.5rem' }}
+              transition={{ duration: 0.45 }}
+            >
+              {metaItems.map((item, index) => (
+                <motion.article
+                  key={item.key}
+                  className="candidate-profile__fact-card"
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                >
+                  <div className="candidate-profile__fact-label">{item.label}</div>
+                  <div className="candidate-profile__fact-value">{item.value}</div>
+                </motion.article>
+              ))}
+            </motion.section>
+          )}
+
+          {priorities && (
+            <motion.article
+              className="candidate-profile__statement"
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="candidate-profile__statement-kicker">{t('profile.statement')}</div>
+              <div className="candidate-profile__statement-text">{priorities}</div>
+            </motion.article>
+          )}
+
+          {extra && (
+            <motion.article
+              className="candidate-profile__statement candidate-profile__statement--secondary"
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+            >
+              <div className="candidate-profile__statement-kicker">{t('profile.additional')}</div>
+              <div className="candidate-profile__statement-text">{extra}</div>
+            </motion.article>
+          )}
+
+          {!!personalItems.length && (
+            <motion.section
+              className="candidate-profile__personal"
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.08 }}
             >
               <div className="candidate-profile__qa-header">
                 <MessageCircle size={20} />
@@ -125,56 +212,61 @@ export default function CandidateProfile() {
               </div>
               <p className="candidate-profile__qa-subtitle">{t('qa.section.subtitle')}</p>
 
-              <div className="candidate-profile__qa-grid">
-                {QA_ITEMS.map(({ key, labelKey, icon: Icon }, i) => {
-                  const answer = candidateQA[key];
-                  if (!answer) return null;
-                  const text = answer[lang] || answer['en'] || answer['is'];
+              <div className="candidate-profile__qa-grid candidate-profile__qa-grid--profile">
+                {personalItems.map((item, index) => {
+                  const Icon = item.icon;
                   return (
-                    <motion.div
-                      key={key}
+                    <motion.article
+                      key={item.key}
                       className="candidate-profile__qa-card"
                       variants={fadeUp}
                       initial="hidden"
                       whileInView="visible"
                       viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: i * 0.07 }}
+                      transition={{ duration: 0.4, delay: index * 0.05 }}
                     >
                       <div className="candidate-profile__qa-question">
                         <Icon size={16} className="candidate-profile__qa-icon" />
-                        <span>{t(labelKey)}</span>
+                        <span>{item.label}</span>
                       </div>
-                      <p className="candidate-profile__qa-answer">{text}</p>
-                    </motion.div>
+                      <p className="candidate-profile__qa-answer">{item.value}</p>
+                    </motion.article>
                   );
                 })}
               </div>
-            </motion.div>
+            </motion.section>
           )}
 
-          {/* Prev / Next navigation */}
-          <motion.div className="candidate-profile__nav" variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
-            {prev && (
+          <motion.div
+            className="candidate-profile__nav"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            {prev ? (
               <Link to={`/frambjodandi/${prev.slug}`} className="candidate-profile__nav-link candidate-profile__nav-link--prev">
                 <ArrowLeft size={16} />
                 <div>
                   <span className="candidate-profile__nav-dir">{t('profile.prev')}</span>
-                  <span className="candidate-profile__nav-name">{prev.name}</span>
+                  <span className="candidate-profile__nav-name">{getCandidateName(prev)}</span>
                 </div>
               </Link>
-            )}
+            ) : <div className="candidate-profile__nav-spacer" />}
+
             <Link to="/#frambod" className="candidate-profile__nav-all">{t('profile.all')}</Link>
-            {next && (
+
+            {next ? (
               <Link to={`/frambjodandi/${next.slug}`} className="candidate-profile__nav-link candidate-profile__nav-link--next">
                 <div style={{ textAlign: 'right' }}>
                   <span className="candidate-profile__nav-dir">{t('profile.next')}</span>
-                  <span className="candidate-profile__nav-name">{next.name}</span>
+                  <span className="candidate-profile__nav-name">{getCandidateName(next)}</span>
                 </div>
                 <ArrowLeft size={16} style={{ transform: 'rotate(180deg)' }} />
               </Link>
-            )}
+            ) : <div className="candidate-profile__nav-spacer" />}
           </motion.div>
-
         </div>
       </section>
     </div>

@@ -11,9 +11,9 @@ export default function Footer() {
         <div className="footer__top">
           <div className="footer__brand-col">
             <div className="footer__brand">
-              <img src="/F Skagastrond.jpg" alt="Fyrir Skagaströnd" className="footer__logo" />
+              <img src="/F Skagastrond.jpg" alt={t('brand.logoAlt')} className="footer__logo" />
               <div>
-                <div className="footer__brand-name">Fyrir Skagaströnd</div>
+                <div className="footer__brand-name">{t('brand.name')}</div>
                 <div className="footer__brand-sub">{t('nav.subtitle')} {currentYear}</div>
               </div>
             </div>
@@ -32,7 +32,7 @@ export default function Footer() {
             <h4 className="footer__col-title">{t('footer.contact')}</h4>
             <a href="tel:+3548917869" className="footer__link">891 7869</a>
             <a href="mailto:xk.fyrirskagastrond@gmail.com" className="footer__link">xk.fyrirskagastrond@gmail.com</a>
-            <a href="https://www.facebook.com/profile.php?id=61576485865769" target="_blank" rel="noopener noreferrer" className="footer__link">Facebook</a>
+            <a href="https://www.facebook.com/profile.php?id=61576485865769" target="_blank" rel="noopener noreferrer" className="footer__link">{t('footer.facebook')}</a>
           </div>
 
           <div className="footer__links-col">

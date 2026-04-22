@@ -22,7 +22,7 @@ export default function AdminLogin() {
       }
       await signIn(email, password);
     } catch (err) {
-      setError(isSupabaseConfigured ? t('login.error') : (lang === 'is' ? 'Supabase stillingar vantar' : 'Missing Supabase configuration'));
+      setError(isSupabaseConfigured ? t('login.error') : t('login.config_error'));
     } finally {
       setLoading(false);
     }
@@ -51,7 +51,7 @@ export default function AdminLogin() {
             <img src="/F Skagastrond.jpg" alt="Fyrir Skagaströnd" className="admin-login-logo__img" />
             <div className="admin-login-logo__text">
               <span className="admin-login-logo__name">Fyrir Skagaströnd</span>
-              <span className="admin-login-logo__sub">Admin Dashboard</span>
+              <span className="admin-login-logo__sub">{t('admin.brand_subtitle')}</span>
             </div>
           </div>
 

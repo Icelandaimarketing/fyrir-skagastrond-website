@@ -13,7 +13,7 @@ import { useAdminLang } from '../context/AdminLangContext';
  *   accept      {string}  — file accept types (default 'image/jpeg,image/png,image/webp')
  */
 export default function ImageUploader({ bucket = 'candidate-photos', path, currentUrl, fallbackUrl = '/F Skagastrond.jpg', onUploaded, accept = 'image/jpeg,image/png,image/webp' }) {
-  const { lang } = useAdminLang();
+  const { t } = useAdminLang();
   const inputRef = useRef(null);
   const [dragging, setDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -23,7 +23,7 @@ export default function ImageUploader({ bucket = 'candidate-photos', path, curre
   async function handleFile(file) {
     if (!file) return;
     if (file.size > 5 * 1024 * 1024) {
-      setError(lang === 'is' ? 'Mynd má ekki vera stærri en 5MB' : 'Image must be smaller than 5MB');
+      setError(t('upload.error.size'));
       return;
     }
     setError('');
@@ -41,7 +41,7 @@ export default function ImageUploader({ bucket = 'candidate-photos', path, curre
       setPreview(publicUrl);
       onUploaded?.(publicUrl);
     } catch (err) {
-      setError(err.message || (lang === 'is' ? 'Villa við upphleðslu' : 'Upload failed'));
+      setError(err.message || t('upload.error.failed'));
     } finally {
       setUploading(false);
     }
@@ -54,7 +54,7 @@ export default function ImageUploader({ bucket = 'candidate-photos', path, curre
         <div style={{ marginBottom: '0.75rem' }}>
           <img
             src={preview}
-            alt="Preview"
+            alt={t('upload.preview')}
             style={{
               width: '100%',
               maxWidth: '280px',
@@ -100,7 +100,7 @@ export default function ImageUploader({ bucket = 'candidate-photos', path, curre
               <path d="M21 12a9 9 0 1 1-6.219-8.56" />
             </svg>
             <br />
-            {lang === 'is' ? 'Hleð upp...' : 'Uploading...'}
+            {t('upload.loading')}
           </div>
         ) : (
           <>
@@ -108,10 +108,10 @@ export default function ImageUploader({ bucket = 'candidate-photos', path, curre
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
             </svg>
             <div className="admin-uploader__text">
-              {lang === 'is' ? 'Dragðu mynd hingað eða smelltu til að velja' : 'Drag an image here or click to select'}
+              {t('upload.dropzone')}
             </div>
             <div className="admin-uploader__hint">
-              {lang === 'is' ? 'JPG eða PNG, max 5MB' : 'JPG or PNG, max 5MB'}
+              {t('upload.hint')}
             </div>
           </>
         )}

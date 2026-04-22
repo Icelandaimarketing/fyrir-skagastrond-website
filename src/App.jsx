@@ -1,8 +1,7 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { LanguageProvider } from './i18n/LanguageContext';
-import { PublicDataProvider } from './context/PublicDataContext';
-import { usePublicData } from './context/PublicDataContext';
+import { PublicDataProvider, usePublicData } from './context/PublicDataContext';
 import { useTranslation } from './i18n/useTranslation';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -29,11 +28,18 @@ function ScrollToTop() {
       const el = document.querySelector(hash);
       if (el) {
         const timeoutId = window.setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth' });
+          const elementStyles = getComputedStyle(el);
+          const headerHeight = Number.parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue('--header-height')
+          ) || 72;
+          const scrollMarginTop = Number.parseFloat(elementStyles.scrollMarginTop) || headerHeight + 24;
+          const top = el.getBoundingClientRect().top + window.scrollY - scrollMarginTop;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
         }, 100);
         return () => window.clearTimeout(timeoutId);
       }
     }
+
     window.scrollTo(0, 0);
   }, [pathname, hash]);
 
@@ -94,9 +100,11 @@ function HomePage() {
 }
 
 function AdminRoute() {
+  const { t } = useTranslation();
+
   return (
     <Suspense
-      fallback={
+      fallback={(
         <div
           style={{
             minHeight: '100vh',
@@ -108,9 +116,9 @@ function AdminRoute() {
             fontFamily: 'Inter, system-ui, sans-serif',
           }}
         >
-          Loading admin...
+          {t('app.loadingAdmin')}
         </div>
-      }
+      )}
     >
       <AdminApp />
     </Suspense>
@@ -125,50 +133,47 @@ export default function App() {
           <ScrollToTop />
           <SeoRuntime />
           <Routes>
-          {/* ── Admin dashboard — its own layout ── */}
-          <Route path="/admin/*" element={<AdminRoute />} />
-
-          {/* ── Public pages ── */}
-          <Route
-            path="/"
-            element={
-              <PublicLayout>
-                <HomePage />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/frambjodandi/:slug"
-            element={
-              <PublicLayout>
-                <CandidateProfile />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/personuvernd"
-            element={
-              <PublicLayout>
-                <PrivacyPolicy />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/vafrakokur"
-            element={
-              <PublicLayout>
-                <CookiePolicy />
-              </PublicLayout>
-            }
-          />
-          <Route
-            path="/malefni/:slug"
-            element={
-              <PublicLayout>
-                <PolicyPage />
-              </PublicLayout>
-            }
-          />
+            <Route path="/admin/*" element={<AdminRoute />} />
+            <Route
+              path="/"
+              element={(
+                <PublicLayout>
+                  <HomePage />
+                </PublicLayout>
+              )}
+            />
+            <Route
+              path="/frambjodandi/:slug"
+              element={(
+                <PublicLayout>
+                  <CandidateProfile />
+                </PublicLayout>
+              )}
+            />
+            <Route
+              path="/personuvernd"
+              element={(
+                <PublicLayout>
+                  <PrivacyPolicy />
+                </PublicLayout>
+              )}
+            />
+            <Route
+              path="/vafrakokur"
+              element={(
+                <PublicLayout>
+                  <CookiePolicy />
+                </PublicLayout>
+              )}
+            />
+            <Route
+              path="/malefni/:slug"
+              element={(
+                <PublicLayout>
+                  <PolicyPage />
+                </PublicLayout>
+              )}
+            />
           </Routes>
         </PublicDataProvider>
       </LanguageProvider>

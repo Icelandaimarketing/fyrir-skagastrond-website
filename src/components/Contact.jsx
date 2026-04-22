@@ -20,7 +20,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="samband" className="section section--navy contact">
+    <section id="samband" className="section section--navy contact section--soft-top">
       <div className="contact__bg" aria-hidden="true" />
       <div className="container">
         <motion.div
@@ -51,7 +51,7 @@ export default function Contact() {
                 const inner = (
                   <>
                     <div className="contact__item-icon"><Icon size={20} /></div>
-                    <div>
+                    <div className="contact__item-body">
                       <div className="contact__item-label">{item.label}</div>
                       <div className={`contact__item-value ${item.href ? 'contact__item-link' : ''}`}>{item.value}</div>
                     </div>

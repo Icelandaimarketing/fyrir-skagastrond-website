@@ -25,6 +25,19 @@ function normalizeBanner(item) {
   return { ...item, translations };
 }
 
+function isValidBannerLink(value) {
+  const trimmed = (value || '').trim();
+  if (!trimmed) return false;
+  if (trimmed.startsWith('/') || trimmed.startsWith('#')) return true;
+
+  try {
+    const url = new URL(trimmed);
+    return ['http:', 'https:'].includes(url.protocol);
+  } catch {
+    return false;
+  }
+}
+
 export default function BannerManager() {
   const { lang } = useAdminLang();
   const [items, setItems] = useState([]);
@@ -61,13 +74,14 @@ export default function BannerManager() {
     try {
       const { images, errors } = await loadMediaImages({
         buckets: ['site-images'],
-        includeStorage: false,
-        dedupeBy: 'url',
+        includeStorage: true,
+        dedupeBy: 'path',
       });
       setMediaImages(images.filter(image =>
         image.bucket === 'site-images'
         && (!image.usage || BANNER_MEDIA_USAGES.has(image.usage))
         && image.url
+        && image.size
       ));
       if (errors.length) setMediaError(errors.join(' | '));
     } catch (error) {
@@ -177,13 +191,24 @@ export default function BannerManager() {
       toast.error(lang === 'is' ? 'Veldu eda hladdu upp banner mynd adur en thu vistar' : 'Choose or upload a banner image before saving');
       return;
     }
+    if (!active.translations.is?.title?.trim()) {
+      toast.error(lang === 'is' ? 'Banner þarf islenskan titil ad minnsta kosti' : 'A banner needs at least an Icelandic title');
+      return;
+    }
+    if (!isValidBannerLink(active.link_url)) {
+      toast.error(lang === 'is'
+        ? 'Settu inn giltan hlekk, til dæmis /malefni/... eða fullt https:// URL'
+        : 'Provide a valid link, such as /malefni/... or a full https:// URL');
+      return;
+    }
     setSaving(true);
     try {
       const imageUrl = active.image_url.trim();
+      const linkUrl = active.link_url.trim();
       const { error } = await supabase.from('banner_items').update({
-        type: active.type,
+        type: (active.type || 'goal').trim(),
         image_url: imageUrl,
-        link_url: active.link_url,
+        link_url: linkUrl,
         sort_order: Number(active.sort_order) || 0,
         is_published: Boolean(active.is_published),
       }).eq('id', active.id);
@@ -384,7 +409,12 @@ export default function BannerManager() {
 
                 <div className="admin-form-group">
                   <label className="admin-label">Link URL</label>
-                  <input className="admin-input" value={active.link_url || ''} onChange={e => updateActive({ link_url: e.target.value })} />
+                  <input
+                    className="admin-input"
+                    value={active.link_url || ''}
+                    onChange={e => updateActive({ link_url: e.target.value })}
+                    placeholder="/malefni/abyrg-fjarmal"
+                  />
                 </div>
 
                 <div className="admin-lang-tabs">

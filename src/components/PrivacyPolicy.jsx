@@ -31,7 +31,7 @@ export default function PrivacyPolicy() {
           <h2>{t('privacy.contact.title')}</h2>
           <p>{t('privacy.contact.text')}</p>
           <ul>
-            <li><strong>Email:</strong> xk.fyrirskagastrond@gmail.com</li>
+            <li><strong>{t('contact.email')}:</strong> xk.fyrirskagastrond@gmail.com</li>
             <li><strong>{t('contact.phone')}:</strong> 891 7869</li>
           </ul>
         </div>

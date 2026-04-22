@@ -11,7 +11,12 @@ const adminTranslations = {
   'login.submit': { is: 'Skrá inn', en: 'Sign in' },
   'login.loading': { is: 'Skrái inn...', en: 'Signing in...' },
   'login.error': { is: 'Rangt netfang eða lykilorð', en: 'Invalid email or password' },
+  'login.config_error': { is: 'Supabase stillingar vantar', en: 'Missing Supabase configuration' },
   'login.forgot': { is: 'Gleymt lykilorð?', en: 'Forgot password?' },
+  'admin.brand_subtitle': { is: 'Stjórnborð', en: 'Admin dashboard' },
+  'app.loading': { is: 'Hleður...', en: 'Loading...' },
+  'auth.access_disabled.title': { is: 'Aðgangur að stjórnborði er ekki virkur', en: 'Admin access is not enabled' },
+  'auth.access_disabled.body': { is: 'Þessi aðgangur er skráður inn en er ekki skráður í', en: 'This account is authenticated, but it is not listed in' },
 
   // ── NAV ───────────────────────────────────────────────────────
   'nav.home': { is: 'Yfirlit', en: 'Overview' },
@@ -86,6 +91,9 @@ const adminTranslations = {
   'candidates.name_note': { is: 'Nafnið þýðist ekki — það er eins á öllum tungumálum', en: 'The name is not translated — it is the same in all languages' },
   'candidates.role': { is: 'Starfsheiti / Hlutverk', en: 'Job title / Role' },
   'candidates.bio': { is: 'Ævisaga / Kynning', en: 'Biography' },
+  'candidates.not_found': { is: 'Frambjóðandi fannst ekki.', en: 'Candidate not found.' },
+  'candidates.role_placeholder': { is: 'Starfsheiti á þessu tungumáli...', en: 'Job title in this language...' },
+  'candidates.bio_placeholder': { is: 'Ævisaga og kynning á þessu tungumáli...', en: 'Biography in this language...' },
   'candidates.upload_photo': { is: 'Hlaða upp mynd', en: 'Upload photo' },
   'candidates.upload_hint': { is: 'Dragðu mynd hingað eða smelltu til að velja', en: 'Drag a photo here or click to select' },
   'candidates.upload_types': { is: 'JPG eða PNG, max 5MB', en: 'JPG or PNG, max 5MB' },
@@ -107,6 +115,14 @@ const adminTranslations = {
   'fb.active': { is: 'Virkt', en: 'Active' },
   'fb.inactive': { is: 'Óvirkt', en: 'Hidden' },
   'fb.empty': { is: 'Engar Facebook færslur enn. Bættu við fyrstu færsluna!', en: 'No Facebook posts yet. Add the first one!' },
+  'fb.add_form.title': { is: 'Bæta við nýrri Facebook færslu', en: 'Add new Facebook post' },
+  'fb.add_form.help': { is: 'Farðu á Facebook → opnaðu færsluna → smelltu á ⋯ → Fella inn → afritaðu slóðina', en: 'Go to Facebook → open the post → click ⋯ → Embed → copy the URL' },
+  'fb.added': { is: 'Færsla bætt við!', en: 'Post added!' },
+  'fb.saved': { is: 'Vistað!', en: 'Saved!' },
+  'fb.deleted': { is: 'Eytt!', en: 'Deleted!' },
+  'fb.hide': { is: 'Fela', en: 'Hide' },
+  'fb.show': { is: 'Birta', en: 'Show' },
+  'fb.height_prefix': { is: 'Hæð', en: 'Height' },
 
   // ── CONTACT ───────────────────────────────────────────────────
   'contact.title': { is: 'Sambandsupplýsingar', en: 'Contact Details' },
@@ -159,6 +175,12 @@ const adminTranslations = {
   'general.edit': { is: 'Breyta', en: 'Edit' },
   'general.close': { is: 'Loka', en: 'Close' },
   'general.back': { is: 'Til baka', en: 'Back' },
+  'upload.preview': { is: 'Forskoðun', en: 'Preview' },
+  'upload.loading': { is: 'Hleð upp...', en: 'Uploading...' },
+  'upload.error.size': { is: 'Mynd má ekki vera stærri en 5MB', en: 'Image must be smaller than 5MB' },
+  'upload.error.failed': { is: 'Villa við upphleðslu', en: 'Upload failed' },
+  'upload.dropzone': { is: 'Dragðu mynd hingað eða smelltu til að velja', en: 'Drag an image here or click to select' },
+  'upload.hint': { is: 'JPG eða PNG, max 5MB', en: 'JPG or PNG, max 5MB' },
 };
 
 export default adminTranslations;

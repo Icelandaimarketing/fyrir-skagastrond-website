@@ -15,10 +15,10 @@ export default function Candidates() {
   const { candidates } = usePublicData();
 
   return (
-    <section id="frambod" className="section section--white">
+    <section id="frambod" className="section section--white section--soft-top">
       <div className="container">
         <motion.div
-          className="candidates__header"
+          className="candidates__header section__header section__header--left"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"

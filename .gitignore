@@ -30,9 +30,12 @@ desktop.ini
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.codex-preview*.log
+.codex-vite*.log
 
 # Misc
 *.tsbuildinfo
+.playwright-cli/
 
 # Local Netlify folder
 .netlify

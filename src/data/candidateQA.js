@@ -7,6 +7,22 @@
 
 const qa = {
   vigdis: {
+    nafn: {
+      is: 'Vigdís Elva Þorgeirsdóttir',
+      en: 'Vigdís Elva Þorgeirsdóttir',
+    },
+    aldur: {
+      is: '46 ára',
+      en: '46 years old',
+    },
+    atvinna: {
+      is: 'Ég er grunnskólakennari og vinn í Höfðaskóla, þar er ég umsjónarkennari í 1. og 2. bekk.',
+      en: 'I am a primary school teacher and work at Höfðaskóli, where I am a class teacher for years 1 and 2.',
+    },
+    fjolskylda: {
+      is: 'Gift Þresti Árnasyni. Við eigum fjögur börn, Auðun Árna (2001), Heklu Guðrúnu (2003), Ellert Atla (2009) og Gunndísi Kötlu (2012). Svo má ekki gleyma hundunum þeim Dreka og Brúnó.',
+      en: 'Married to Þrestur Árnason. We have four children — Auðun Árni (2001), Hekla Guðrún (2003), Ellert Atli (2009) and Gunndís Katla (2012). And we can\'t forget our dogs Dreki and Brúnó.',
+    },
     fritimi: {
       is: 'Finnst mér sófinn góður, flakka um og vera með fjölskyldunni, hafa gaman með vinkonum eða prjóna og hlusta á góða hljóðbók.',
       en: 'I love the sofa, wandering around and being with the family, having fun with friends, knitting and listening to a good audiobook.',
@@ -34,6 +50,22 @@ const qa = {
   },
 
   ragnar: {
+    nafn: {
+      is: 'Ragnar Rögnvaldsson',
+      en: 'Ragnar Rögnvaldsson',
+    },
+    aldur: {
+      is: '41 árs',
+      en: '41 years old',
+    },
+    atvinna: {
+      is: 'Ég hef starfað hluta árs á Sæborg og vinn einnig sem verktaki við þangslátt í Breiðafirði.',
+      en: 'I have worked part of the year at Sæborg and also work as a contractor in kelp harvesting in Breiðafjörður.',
+    },
+    fjolskylda: {
+      is: 'Ég er giftur Ílónu Sif Ásgeirsdóttur og saman eigum við tvo drengi á níunda ári, Rögnvald og Emil.',
+      en: 'I am married to Ílóna Sif Ásgeirsdóttir and together we have two boys turning nine, Rögnvaldur and Emil.',
+    },
     fritimi: {
       is: 'Mér finnst best að verja tíma með fjölskyldunni – elda saman, ferðast, njóta náttúrunnar og skapa góðar minningar með mínum nánustu.',
       en: 'I love spending time with my family — cooking together, travelling, enjoying nature and making great memories with those closest to me.',
@@ -65,6 +97,22 @@ const qa = {
   },
 
   astros: {
+    nafn: {
+      is: 'Ástrós Elísdóttir',
+      en: 'Ástrós Elísdóttir',
+    },
+    aldur: {
+      is: '43 ára',
+      en: '43 years old',
+    },
+    atvinna: {
+      is: 'Starfa sem umsjónarkennari á unglingastigi í Höfðaskóla og söngkennari í Tónlistarskóla A-Hún.',
+      en: 'I work as a class teacher at upper level in Höfðaskóli and as a singing teacher at the A-Hún Music School.',
+    },
+    fjolskylda: {
+      is: 'Ég er gift Valtý Sigurðssyni og við eigum fjögur börn: Dídí, Súsönnu, Ella og Fríðu Dórótheu.',
+      en: 'I am married to Valtýr Sigurðsson and we have four children: Dídí, Súsanna, Elli and Fríða Dóróthea.',
+    },
     fritimi: {
       is: 'Vera með fjölskyldunni, syngja, fara í leikhús, borða góðan mat, ferðast, fara á tónleika, dansa, skauta og spjalla við skemmtilegt fólk.',
       en: 'Being with my family, singing, going to the theatre, eating good food, travelling, attending concerts, dancing, skating and chatting with fun people.',
@@ -92,8 +140,24 @@ const qa = {
   },
 
   johann: {
+    nafn: {
+      is: 'Jóhann Guðbjartur Sigurjónsson',
+      en: 'Jóhann Guðbjartur Sigurjónsson',
+    },
+    aldur: {
+      is: '46 ára',
+      en: '46 years old',
+    },
+    atvinna: {
+      is: 'Skipstjóri, vélstjóri og ýmis önnur störf innan fjölskyldufyrirtækisins, sem er Vík ehf útgerð.',
+      en: 'Skipper, engineer and various other roles within the family company, which is Vík ehf fishing operation.',
+    },
+    fjolskylda: {
+      is: 'Trúlofaður Ásu Ósk Ásgeirsdóttur, fjögur börn og fjögur barnabörn.',
+      en: 'Engaged to Ása Ósk Ásgeirsdóttir, four children and four grandchildren.',
+    },
     fritimi: {
-      is: 'Bara sittlítið af hverju, leika mér á hinum ýmsum leiktækjum, eyða tíma með fjölskyldunni og vinum.',
+      is: 'Bara sittlítið af hverju, leika mér á hinum ýmsum leiktækjum, eyða tíma með fjölskyldunni og vinum..',
       en: 'A little bit of everything — playing around with various gadgets, spending time with family and friends.',
     },
     pizza: {
@@ -109,7 +173,7 @@ const qa = {
       en: 'Candour and honesty.',
     },
     uppahald: {
-      is: 'Höfnin er eiginlega hægt að segja að sé minn uppáhals staður hér á ströndinni.',
+      is: 'Höfnin er eiginlega hægt að segja að sé minn uppáhaldsstaður hér á ströndinni.',
       en: 'The harbour is probably what I\'d call my favourite spot here on the strand.',
     },
     kjortimabil: {
@@ -123,6 +187,22 @@ const qa = {
   },
 
   halla: {
+    nafn: {
+      is: 'Halla María Þórðardóttir',
+      en: 'Halla María Þórðardóttir',
+    },
+    aldur: {
+      is: '39 ára',
+      en: '39 years old',
+    },
+    atvinna: {
+      is: 'Umsjónarkennari á miðstigi í Höfðaskóla, slökkviliðskona og reiðkennari.',
+      en: 'Class teacher at middle level in Höfðaskóli, firefighter and riding instructor.',
+    },
+    fjolskylda: {
+      is: 'Ég er gift Magnúsi Líndal og saman eigum við þrjú börn. Við búum á Skagaströnd þar sem fjölskyldulífið snýst mikið um útiveru, hestamennsku og dýrin okkar.',
+      en: 'I am married to Magnús Líndal and together we have three children. We live in Skagaströnd where family life revolves around the outdoors, horsemanship and our animals.',
+    },
     fritimi: {
       is: 'Mér finnst skemmtilegast að hafa nóg að gera, vera í sveitinni og fara á hestbak. Ég hef gaman af því að ferðast og læra eitthvað nýtt, en það sem gefur mér mest er að kenna börnum og fullorðnum að fara á hestbak og umgangast dýr.',
       en: 'I enjoy having plenty to do, being out in the countryside and going horse riding. I like travelling and learning something new, but what gives me the most is teaching children and adults to ride horses and work with animals.',
@@ -154,12 +234,28 @@ const qa = {
   },
 
   patrik: {
+    nafn: {
+      is: 'Patrik Snær Bjarnason',
+      en: 'Patrik Snær Bjarnason',
+    },
+    aldur: {
+      is: '35 ára',
+      en: '35 years old',
+    },
+    atvinna: {
+      is: 'Nýkominn af sjónum sem vélstjóri á sjálfstætt starfandi verkstæði.',
+      en: 'Recently came ashore from working as an engineer at sea, now at a self-employed workshop.',
+    },
+    fjolskylda: {
+      is: 'Kona og þrjú börn.',
+      en: 'Wife and three children.',
+    },
     fritimi: {
       is: 'Þvælast um hálendið á jeppa eða vera í hestaferð.',
       en: 'Roaming the highlands in a jeep or going on a horse trek.',
     },
     pizza: {
-      is: 'Kjöt og ostur er yfirleitt fyrir valinu.',
+      is: 'Kjöt og ostur verður yfirleitt fyrir valinu.',
       en: 'Meat and cheese is usually my go-to.',
     },
     netflix: {
@@ -175,39 +271,71 @@ const qa = {
       en: 'The riding trails in the marshland. An amazing place on a good day.',
     },
     kjortimabil: {
-      is: 'Styrkja innviði svo atvinnulíf haldi áfram að blómstra. Halda áfram með uppbyggingu húsnæða.',
+      is: 'Styrkja innviði svo atvinnulíf haldi áfram að blómstra. Halda áfram með uppbyggingu húsnæðis.',
       en: 'Strengthen infrastructure so that business life continues to flourish. Continue with housing development.',
     },
   },
 
   'eva-dis': {
+    nafn: {
+      is: 'Eva Dís Gunnarsdóttir',
+      en: 'Eva Dís Gunnarsdóttir',
+    },
+    aldur: {
+      is: '32 ára',
+      en: '32 years old',
+    },
+    atvinna: {
+      is: 'Ég starfa sem stuðningsfulltrúi með aukna ábyrgð og er umsjónarmaður námsversins í grunnskólanum okkar. Svo er ég einnig í slökkviliði Skagastrandar.',
+      en: 'I work as a support worker with increased responsibility and am the supervisor of the study workshop at our primary school. I am also a member of the Skagaströnd fire brigade.',
+    },
+    fjolskylda: {
+      is: 'Er í sambúð með Friðþóri Sveinssyni (Fiffi), hann er sjómaður og saman eigum við tvö börn, Öldu Katrínu 8 ára og Gunnar Inga 4 ára.',
+      en: 'I live with Friðþór Sveinsson (Fiffi), he is a seaman, and together we have two children — Alda Katrín, 8, and Gunnar Ingi, 4.',
+    },
     fritimi: {
-      is: 'Samverustundir með fjölskyldunni, spila, ferðast og skoða nýja staði. Svo má ekki gleyma nýjasta hjá mér — er pickleball og kántrýdansar.',
+      is: 'Samverustundir með fjölskyldunni, spila, ferðast og skoða nýja staði. Svo má ekki gleyma því nýjasta hjá mér — sem er pickleball og kántrýdansar.',
       en: 'Quality time with the family, playing games, travelling and discovering new places. And I can\'t forget my latest obsessions — pickleball and country dancing.',
     },
     pizza: {
-      is: 'Ég borða nú flest á pítsu en ætli algengasta sé ekki pepperoni, sveppi, lauk og bacon.',
+      is: 'Ég borða nú flest á pítsu en ætli það algengasta sé ekki pepperoni, sveppi, lauk og bacon.',
       en: 'I eat pretty much anything on a pizza but I suppose my most common order is pepperoni, mushrooms, onion and bacon.',
     },
     netflix: {
-      is: 'Netflix — elska detta inn á einhverja góða þætti.',
+      is: 'Netflix — elska að detta inn á einhverja góða þætti.',
       en: 'Netflix — I love losing myself in a great series.',
     },
     samstarf: {
-      is: 'Traust, virðing og það sé hægt að hlusta á aðra og tekið tillit til skoðana þeirra.',
+      is: 'Traust, virðing og það sé hægt að hlusta á aðra og tillit tekið til skoðana þeirra.',
       en: 'Trust, respect and the ability to listen to others and take their views into account.',
     },
     uppahald: {
-      is: 'Ég elska allt við Skagaströnd, kyrrðina og sjóinn — elska góðan göngutúr uppá höfða eða að sandlæk eða fara inn í dal með krakkana á sumrin.',
+      is: 'Ég elska allt við Skagaströnd, kyrrðina og sjóinn — elska góðan göngutúr upp á Höfða eða að Sandlæk eða að fara inn í dal með krakkana á sumrin.',
       en: 'I love everything about Skagaströnd — the peace and the sea. I love a good walk up to Höfði or down to Sandlækur, or heading into the valley with the kids in summer.',
     },
     kjortimabil: {
-      is: 'Atvinna, menntamál og geta skapað jöfn tækifæri fyrir alla.',
+      is: 'Atvinna, menntamál og að geta skapað jöfn tækifæri fyrir alla.',
       en: 'Employment, education and being able to create equal opportunities for everyone.',
     },
   },
 
   andri: {
+    nafn: {
+      is: 'Andri Már Welding Hákonarson',
+      en: 'Andri Már Welding Hákonarson',
+    },
+    aldur: {
+      is: '39 ára',
+      en: '39 years old',
+    },
+    atvinna: {
+      is: 'Yfirstýrimaður á Drangey SK2 og hafnsögumaður hjá Sauðárkrókshöfn.',
+      en: 'Chief mate on Drangey SK2 and harbour pilot at Sauðárkrókur harbour.',
+    },
+    fjolskylda: {
+      is: 'Í sambúð á Skagaströnd með frú Carolin Giese (Línu) og ég á eina 17 ára gamla stúlku, hana Hafdísi Sunnu.',
+      en: 'Living in Skagaströnd with my partner Carolin Giese (Lína), and I have one 17-year-old daughter, Hafdís Sunna.',
+    },
     fritimi: {
       is: 'Brasa í hrossum með fjölskyldu og vinum.',
       en: 'Chilling with the horses with family and friends.',
@@ -239,6 +367,22 @@ const qa = {
   },
 
   daniela: {
+    nafn: {
+      is: 'Daniela Esmeralda Ortega "Esme"',
+      en: 'Daniela Esmeralda Ortega "Esme"',
+    },
+    aldur: {
+      is: '36 ára',
+      en: '36 years old',
+    },
+    atvinna: {
+      is: 'Yfirmatreiðslumaður og leiðandi starfsmaður í Frístund, eigandi Ocean Cape Cabins ehf.',
+      en: 'Head chef and lead worker at Frístund, owner of Ocean Cape Cabins ehf.',
+    },
+    fjolskylda: {
+      is: 'Gift Gunnari Þór Gunnarssyni. Við eigum þrjá yndislega drengi: Daniel Thor (9 ára), Nikolai Río (6 ára) og Júpiter Ás (2 ára).',
+      en: 'Married to Gunnar Þór Gunnarsson. We have three wonderful boys: Daniel Thor (9), Nikolai Río (6) and Júpiter Ás (2).',
+    },
     fritimi: {
       is: 'Að vera með fjölskyldunni minni, fara í skokk um bæinn með íslenska fjárhundinum okkar, Timon, lesa Biblíuna og horfa á góða mexíkóska sápuóperu.',
       en: 'Being with my family, jogging around town with our Icelandic sheepdog Timon, reading the Bible and watching a good Mexican soap opera.',
@@ -270,8 +414,24 @@ const qa = {
   },
 
   agust: {
+    nafn: {
+      is: 'Ágúst Óðinn Ómarsson',
+      en: 'Ágúst Óðinn Ómarsson',
+    },
+    aldur: {
+      is: '56 ára',
+      en: '56 years old',
+    },
+    atvinna: {
+      is: 'Skipstjóri.',
+      en: 'Skipper.',
+    },
+    fjolskylda: {
+      is: 'Á sambýliskonu og 4 uppkomin börn, 6 barnabörn og eitt á leiðinni.',
+      en: 'Has a partner and 4 grown-up children, 6 grandchildren and one on the way.',
+    },
     fritimi: {
-      is: 'Er græjukall, hef gaman af flest öllu sportti sem inniheldur vélbúnað.',
+      is: 'Er græjukall, hef gaman af flest öllu sporti sem inniheldur vélbúnað.',
       en: 'I\'m a gadget guy — I enjoy pretty much all sport that involves machinery.',
     },
     pizza: {

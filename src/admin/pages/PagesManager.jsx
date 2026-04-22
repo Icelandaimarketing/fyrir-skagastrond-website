@@ -12,6 +12,15 @@ function emptyTranslations() {
   }, {});
 }
 
+function slugify(value) {
+  return String(value || '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 export default function PagesManager() {
   const { lang } = useAdminLang();
   const [pages, setPages] = useState([]);
@@ -85,12 +94,34 @@ export default function PagesManager() {
 
   async function save() {
     if (!active) return;
+    const slug = slugify(active.slug);
+    const title = active.translations.is?.title?.trim();
+    const summary = active.translations.is?.summary?.trim();
+    const body = active.translations.is?.body?.trim();
+
+    if (!slug) {
+      toast.error(lang === 'is' ? 'Sida þarf gilt slug' : 'Page needs a valid slug');
+      return;
+    }
+    if (!title) {
+      toast.error(lang === 'is' ? 'Sida þarf islenskan titil ad minnsta kosti' : 'Page needs at least an Icelandic title');
+      return;
+    }
+    if (!summary) {
+      toast.error(lang === 'is' ? 'Sida þarf stutta lysingu ad minnsta kosti' : 'Page needs at least a short summary');
+      return;
+    }
+    if (!body) {
+      toast.error(lang === 'is' ? 'Sida þarf meginmalsgreinar ad minnsta kosti' : 'Page needs body content before it can be saved');
+      return;
+    }
+
     setSaving(true);
     try {
       const { error } = await supabase.from('pages').update({
-        slug: active.slug,
-        hero_image_url: active.hero_image_url,
-        og_image_url: active.og_image_url,
+        slug,
+        hero_image_url: active.hero_image_url?.trim() || null,
+        og_image_url: active.og_image_url?.trim() || null,
         sort_order: Number(active.sort_order) || 0,
         is_published: Boolean(active.is_published),
       }).eq('id', active.id);
@@ -162,7 +193,7 @@ export default function PagesManager() {
               <div className="admin-grid-2">
                 <div className="admin-form-group">
                   <label className="admin-label">Slug</label>
-                  <input className="admin-input" value={active.slug || ''} onChange={e => updateActive({ slug: e.target.value })} />
+                  <input className="admin-input" value={active.slug || ''} onChange={e => updateActive({ slug: slugify(e.target.value) })} />
                 </div>
                 <div className="admin-form-group">
                   <label className="admin-label">Sort order</label>
@@ -172,6 +203,10 @@ export default function PagesManager() {
               <div className="admin-form-group">
                 <label className="admin-label">Hero image URL</label>
                 <input className="admin-input" value={active.hero_image_url || ''} onChange={e => updateActive({ hero_image_url: e.target.value })} />
+              </div>
+              <div className="admin-form-group">
+                <label className="admin-label">OG image URL</label>
+                <input className="admin-input" value={active.og_image_url || ''} onChange={e => updateActive({ og_image_url: e.target.value })} />
               </div>
 
               <div className="admin-lang-tabs">

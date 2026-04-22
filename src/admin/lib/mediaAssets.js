@@ -24,12 +24,33 @@ export function createUploadPath(file, prefix = 'uploads') {
   return `${prefix}/${id}-${safeName || 'image'}${extension ? `.${extension}` : ''}`;
 }
 
+async function listFolderEntries(bucket, prefix = '') {
+  const folderEntries = [];
+  let offset = 0;
+  const limit = 100;
+
+  while (true) {
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .list(prefix, {
+        limit,
+        offset,
+        sortBy: { column: 'name', order: 'asc' },
+      });
+    if (error) throw error;
+    if (!data?.length) break;
+
+    folderEntries.push(...data);
+    if (data.length < limit) break;
+    offset += data.length;
+  }
+
+  return folderEntries;
+}
+
 export async function listStorageImages(bucket, prefix = '') {
-  const { data, error } = await supabase.storage
-    .from(bucket)
-    .list(prefix, { limit: 100, sortBy: { column: 'name', order: 'asc' } });
-  if (error) throw error;
-  if (!data) return [];
+  const data = await listFolderEntries(bucket, prefix);
+  if (!data.length) return [];
 
   const results = [];
   for (const entry of data) {

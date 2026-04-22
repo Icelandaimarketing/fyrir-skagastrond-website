@@ -8,6 +8,7 @@ import fallbackTranslations, {
   FALLBACK_POLICY_PAGES,
   getFallbackCandidates,
 } from '../data/fallbackContent';
+import candidateQa from '../data/candidateQaContent';
 import { getCandidateFallbackImage } from '../data/candidateImageFallbacks';
 
 const PublicDataContext = createContext(null);
@@ -55,7 +56,7 @@ function normalizeCandidates(rows) {
         gallery: images,
         role: translationRowsToMap(candidate.candidate_translations, 'role'),
         bio: translationRowsToMap(candidate.candidate_translations, 'bio'),
-        qa: normalizeCandidateQa(candidate.candidate_qa),
+        qa: candidateQa[candidate.slug] || normalizeCandidateQa(candidate.candidate_qa),
       };
     })
     .sort((a, b) => (a.sort_order ?? a.nr) - (b.sort_order ?? b.nr));
@@ -81,12 +82,61 @@ function normalizeBannerItems(rows) {
     .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
 }
 
+function uniqueBannerItems(items) {
+  const byKey = new Map();
+  (items || []).forEach((item) => {
+    const title = item.title?.is || item.title?.en || item.title || '';
+    const key = `${title}|${item.link_url || ''}`.toLowerCase();
+    if (title && !byKey.has(key)) byKey.set(key, item);
+  });
+  return Array.from(byKey.values()).sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+}
+
+function mergeBannerItems(rows) {
+  const normalized = uniqueBannerItems(rows);
+  const fallbackByTitle = new Map(FALLBACK_BANNER_ITEMS.map((item) => [item.title?.is || item.id, item]));
+  normalized.forEach((item) => {
+    fallbackByTitle.set(item.title?.is || item.id, item);
+  });
+  return uniqueBannerItems(Array.from(fallbackByTitle.values()));
+}
+
 function mergePages(rows) {
   const bySlug = new Map(FALLBACK_POLICY_PAGES.map(page => [page.slug, page]));
   (rows || []).forEach(page => {
-    bySlug.set(page.slug, page);
+    const fallbackPage = bySlug.get(page.slug);
+    const translationMap = new Map(
+      (fallbackPage?.page_translations || []).map((translation) => [translation.lang, translation]),
+    );
+
+    (page.page_translations || []).forEach((translation) => {
+      translationMap.set(translation.lang, {
+        ...(translationMap.get(translation.lang) || {}),
+        ...translation,
+      });
+    });
+
+    bySlug.set(page.slug, {
+      ...fallbackPage,
+      ...page,
+      page_translations: Array.from(translationMap.values()),
+    });
   });
   return Array.from(bySlug.values()).sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+}
+
+function mergeFacebookPosts(rows) {
+  const byEmbedUrl = new Map();
+  [...FALLBACK_FACEBOOK_POSTS, ...(rows || [])].forEach((post, index) => {
+    const key = (post.embed_url || post.src || '').trim();
+    if (!key) return;
+    byEmbedUrl.set(key, {
+      ...post,
+      sort_order: post.sort_order ?? index,
+      height: post.height || 680,
+    });
+  });
+  return Array.from(byEmbedUrl.values()).sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
 }
 
 export function PublicDataProvider({ children }) {
@@ -157,10 +207,10 @@ export function PublicDataProvider({ children }) {
           ...FALLBACK_CONTACT,
           ...rowsToKeyValues(contactResult.data),
         },
-        facebookPosts: facebookResult.data?.length ? facebookResult.data : FALLBACK_FACEBOOK_POSTS,
+        facebookPosts: mergeFacebookPosts(facebookResult.data),
         bannerItems: bannerResult.error || !bannerResult.data?.length
           ? FALLBACK_BANNER_ITEMS
-          : normalizeBannerItems(bannerResult.data),
+          : mergeBannerItems(normalizeBannerItems(bannerResult.data)),
         settings: {
           hero_image_url: FALLBACK_HERO_IMAGE,
           hero_alt_image_url: '/Group images/32.jpg',
