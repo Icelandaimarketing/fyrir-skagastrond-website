@@ -55,6 +55,7 @@ export default function CandidateProfile() {
   const prev = currentIndex > 0 ? candidates[currentIndex - 1] : null;
   const next = currentIndex < candidates.length - 1 ? candidates[currentIndex + 1] : null;
   const candidateSource = candidateQa[candidate.slug] || {};
+  const isLeadCandidate = candidate.nr === 1;
 
   const displayName = getLocalized(candidateSource.nafn, lang) || candidate.name;
   const priorities = getLocalized(candidateSource.kjortimabil, lang);
@@ -132,9 +133,16 @@ export default function CandidateProfile() {
               animate="visible"
               transition={{ duration: 0.55, delay: 0.08 }}
             >
-              <span className="candidate-profile__status">
-                {`${t('profile.nr')} ${candidate.nr} ${t('profile.onlist')}`}
-              </span>
+              <div className="candidate-profile__hero-badges">
+                <span className="candidate-profile__status">
+                  {`${t('profile.nr')} ${candidate.nr} ${t('profile.onlist')}`}
+                </span>
+                {isLeadCandidate && (
+                  <span className="badge badge--red candidate-profile__lead-badge">
+                    {t('profile.oddviti')}
+                  </span>
+                )}
+              </div>
               <h1 className="candidate-profile__name">{displayName}</h1>
             </motion.div>
           </div>

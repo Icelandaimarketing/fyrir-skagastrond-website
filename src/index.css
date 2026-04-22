@@ -1711,6 +1711,13 @@ ul, ol {
   max-width: 540px;
 }
 
+.candidate-profile__hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .candidate-profile__name {
   max-width: 8ch;
   font-size: clamp(2.8rem, 7vw, 5.2rem);
@@ -1732,6 +1739,15 @@ ul, ol {
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.candidate-profile__lead-badge {
+  padding-inline: 1rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 14px 28px rgba(215, 40, 47, 0.28);
 }
 
 .candidate-profile__body {
