@@ -6,7 +6,7 @@ export const CANDIDATE_IMAGE_FALLBACKS = {
   halla: '/Halla 5th/19.jpg',
   patrik: '/Patrik 6th/10.jpg',
   'eva-dis': '/Eva Dís 7th/14.jpg',
-  andri: '/Andri 8th/Andri.jpg',
+  andri: '/Andri 8th/Andri.jpeg',
   daniela: '/Daniela 9th/18.jpg',
   agust: '/Ágúst 10th/7.jpg',
 };
