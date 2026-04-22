@@ -181,6 +181,7 @@ function buildAutomatedBannerItems(candidates, pages) {
           no: 'Kandidat',
         },
         image_url: candidate.image_url || candidate.image,
+        imageObjectPosition: candidate.imageObjectPosition || 'center',
         link_url: `/frambjodandi/${candidate.slug}`,
         title: ensureTextMap(source.nafn, candidate.name || ''),
         description: ensureTextMap(source.atvinna, ''),
@@ -257,6 +258,7 @@ function BannerCard({ item, lang, inert = false }) {
       src={item.image_url || '/Group images/29.jpg'}
       alt={title}
       className={imageClassName}
+      style={item.imageObjectPosition ? { objectPosition: item.imageObjectPosition } : undefined}
       loading="lazy"
       onError={(event) => { event.currentTarget.src = '/Group images/29.jpg'; }}
     />
@@ -266,6 +268,7 @@ function BannerCard({ item, lang, inert = false }) {
         src={item.image_url || '/Group images/29.jpg'}
         alt={title}
         className={imageClassName}
+        style={item.imageObjectPosition ? { objectPosition: item.imageObjectPosition } : undefined}
         loading="lazy"
         onError={(event) => { event.currentTarget.src = '/Group images/29.jpg'; }}
       />

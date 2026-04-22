@@ -11,6 +11,14 @@ export const CANDIDATE_IMAGE_FALLBACKS = {
   agust: '/Ágúst 10th/7.jpg',
 };
 
+export const CANDIDATE_IMAGE_OBJECT_POSITIONS = {
+  andri: '62% center',
+};
+
 export function getCandidateFallbackImage(slug) {
   return CANDIDATE_IMAGE_FALLBACKS[slug] || '/F Skagastrond.jpg';
+}
+
+export function getCandidateImageObjectPosition(slug) {
+  return CANDIDATE_IMAGE_OBJECT_POSITIONS[slug] || 'center';
 }

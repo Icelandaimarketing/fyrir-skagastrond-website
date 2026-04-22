@@ -2,6 +2,7 @@ import translations from '../i18n/translations.js';
 import { candidates as staticCandidates } from './candidates.js';
 import qa from './candidateQA.js';
 import { campaignBannerItems, policyProgramAsPages } from './policyProgram.js';
+import { getCandidateImageObjectPosition } from './candidateImageFallbacks.js';
 
 export const SUPABASE_PROJECT_URL = 'https://yestlkukcdjlrtvxugkg.supabase.co';
 export const SITE_IMAGE_BUCKET = 'site-images';
@@ -73,7 +74,7 @@ export const FALLBACK_FACEBOOK_POSTS = [
   },
 ];
 
-export const FALLBACK_HERO_IMAGE = '/Group images/29.jpg';
+export const FALLBACK_HERO_IMAGE = '/Group images/group_with_logo.jpg';
 export const FALLBACK_HERO_ALTERNATE_IMAGE = '/Group images/32.jpg';
 
 export const FALLBACK_BANNER_ITEMS = campaignBannerItems();
@@ -143,6 +144,7 @@ export function getFallbackCandidates() {
     image_url: candidate.image,
     primary_image_url: candidate.image,
     fallback_image_url: candidate.image,
+    imageObjectPosition: getCandidateImageObjectPosition(candidate.slug),
     role: {},
     bio: {},
     qa: qa[candidate.slug] || {},

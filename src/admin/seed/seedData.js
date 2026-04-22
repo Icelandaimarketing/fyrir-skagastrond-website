@@ -6,6 +6,13 @@ const LANGS = ['is', 'en', 'es', 'pl', 'de', 'da', 'no'];
 
 const SUPABASE_STORAGE_BASE = 'https://yestlkukcdjlrtvxugkg.supabase.co/storage/v1/object/public/candidate-photos';
 const SITE_STORAGE_BASE = 'https://yestlkukcdjlrtvxugkg.supabase.co/storage/v1/object/public/site-images';
+const PROFILE_IMAGE_PATHS = {
+  andri: 'andri/profile-20260422.jpeg',
+};
+
+function getProfileImagePath(slug) {
+  return PROFILE_IMAGE_PATHS[slug] || `${slug}/profile.jpg`;
+}
 
 const CANDIDATES_RAW = [
   { nr: 1,  name: 'Vigdís Elva Þorgeirsdóttir',       slug: 'vigdis',   image_url: `${SUPABASE_STORAGE_BASE}/vigdis/profile.jpg` },
@@ -82,7 +89,7 @@ export async function seedDatabase(supabase) {
       nr: c.nr,
       name: c.name,
       slug: c.slug,
-      image_url: c.image_url,
+      image_url: `${SUPABASE_STORAGE_BASE}/${getProfileImagePath(c.slug)}`,
       sort_order: i,
       is_published: true,
     }));
@@ -142,7 +149,7 @@ export async function seedDatabase(supabase) {
         });
       });
 
-      const storagePath = `${candidate.slug}/profile.jpg`;
+      const storagePath = getProfileImagePath(candidate.slug);
       imageRows.push({
         candidate_id: candidate.id,
         storage_path: storagePath,
@@ -184,7 +191,7 @@ export async function seedDatabase(supabase) {
     const { error: settingsError } = await supabase
       .from('site_settings')
       .upsert([
-        { key: 'hero_image_url', value: `${SITE_STORAGE_BASE}/hero/group-29.jpg` },
+        { key: 'hero_image_url', value: `${SITE_STORAGE_BASE}/hero/group_with_logo.jpg` },
         { key: 'hero_alt_image_url', value: `${SITE_STORAGE_BASE}/hero/group-32.jpg` },
       ], { onConflict: 'key' });
     if (settingsError) throw settingsError;

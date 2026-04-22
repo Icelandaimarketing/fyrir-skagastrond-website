@@ -9,7 +9,7 @@ import fallbackTranslations, {
   getFallbackCandidates,
 } from '../data/fallbackContent';
 import candidateQa from '../data/candidateQaContent';
-import { getCandidateFallbackImage } from '../data/candidateImageFallbacks';
+import { getCandidateFallbackImage, getCandidateImageObjectPosition } from '../data/candidateImageFallbacks';
 
 const PublicDataContext = createContext(null);
 
@@ -64,6 +64,7 @@ function normalizeCandidates(rows) {
         image_url: primary?.url || candidate.image_url || fallbackImage,
         primary_image_url: primary?.url || candidate.image_url || fallbackImage,
         fallback_image_url: fallbackImage,
+        imageObjectPosition: getCandidateImageObjectPosition(candidate.slug),
         gallery: images,
         role: translationRowsToMap(candidate.candidate_translations, 'role'),
         bio: translationRowsToMap(candidate.candidate_translations, 'bio'),

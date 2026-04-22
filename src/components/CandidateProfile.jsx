@@ -113,6 +113,7 @@ export default function CandidateProfile() {
                 src={candidate.primary_image_url || candidate.image_url || candidate.image}
                 alt={displayName}
                 className="candidate-profile__photo"
+                style={{ objectPosition: candidate.imageObjectPosition || 'center' }}
                 onError={(event) => {
                   const fallback = candidate.fallback_image_url || '/F Skagastrond.jpg';
                   if (event.currentTarget.dataset.fallbackApplied) {

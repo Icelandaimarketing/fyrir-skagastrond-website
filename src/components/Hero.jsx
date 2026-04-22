@@ -20,7 +20,7 @@ const PARTICLES = [
 export default function Hero() {
   const { t } = useTranslation();
   const { settings } = usePublicData();
-  const heroImage = settings?.hero_image_url || '/Group images/29.jpg';
+  const heroImage = settings?.hero_image_url || '/Group images/group_with_logo.jpg';
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
@@ -107,7 +107,7 @@ export default function Hero() {
                 alt={t('brand.name')}
                 className="hero__brand-photo-img"
                 fetchPriority="high"
-                onError={(event) => { event.currentTarget.src = '/Group images/29.jpg'; }}
+                onError={(event) => { event.currentTarget.src = '/Group images/group_with_logo.jpg'; }}
               />
               <div className="hero__brand-photo-overlay" />
               <span className="hero__image-hint">{t('hero.image.hint')}</span>

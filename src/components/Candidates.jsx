@@ -49,6 +49,7 @@ export default function Candidates() {
                       src={candidate.primary_image_url || candidate.image_url || candidate.image}
                       alt={candidate.name}
                       className="candidate-card__photo"
+                      style={{ objectPosition: candidate.imageObjectPosition || 'center' }}
                       loading="lazy"
                       onError={(event) => {
                         const fallback = candidate.fallback_image_url || '/F Skagastrond.jpg';
