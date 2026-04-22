@@ -1,5 +1,5 @@
 // Candidate data — images served from Supabase Storage (candidate-photos bucket)
-import { getCandidateFallbackImage } from './candidateImageFallbacks';
+import { getCandidateFallbackImage } from './candidateImageFallbacks.js';
 
 // Static fallback candidate data. Supabase Storage is the production source of truth.
 

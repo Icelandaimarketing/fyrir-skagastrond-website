@@ -25,7 +25,7 @@ export function getPolicyPosterImage(slug) {
   return POLICY_POSTER_IMAGES[slug] || null;
 }
 
-export const SUPPORTED_POLICY_LANGUAGES = ['is', 'en'];
+export const SUPPORTED_POLICY_LANGUAGES = ['is', 'en', 'es', 'pl', 'de', 'da', 'no'];
 
 const POLICY_SHORT_TITLES = {
   'abyrg-fjarmal': 'Ábyrg fjármál',

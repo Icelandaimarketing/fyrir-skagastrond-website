@@ -1,7 +1,7 @@
-import translations from '../i18n/translations';
-import { candidates as staticCandidates } from './candidates';
-import qa from './candidateQA';
-import { campaignBannerItems, policyProgramAsPages } from './policyProgram';
+import translations from '../i18n/translations.js';
+import { candidates as staticCandidates } from './candidates.js';
+import qa from './candidateQA.js';
+import { campaignBannerItems, policyProgramAsPages } from './policyProgram.js';
 
 export const SUPABASE_PROJECT_URL = 'https://yestlkukcdjlrtvxugkg.supabase.co';
 export const SITE_IMAGE_BUCKET = 'site-images';

@@ -38,6 +38,17 @@ function translationRowsToMap(rows, field) {
   return next;
 }
 
+function mergeTranslationMaps(base = {}, incoming = {}) {
+  const merged = { ...base };
+  Object.entries(incoming || {}).forEach(([key, value]) => {
+    merged[key] = {
+      ...(base[key] || {}),
+      ...(value || {}),
+    };
+  });
+  return merged;
+}
+
 function normalizeCandidates(rows) {
   return (rows || [])
     .filter((candidate) => candidate.is_published !== false)
@@ -56,7 +67,10 @@ function normalizeCandidates(rows) {
         gallery: images,
         role: translationRowsToMap(candidate.candidate_translations, 'role'),
         bio: translationRowsToMap(candidate.candidate_translations, 'bio'),
-        qa: candidateQa[candidate.slug] || normalizeCandidateQa(candidate.candidate_qa),
+        qa: mergeTranslationMaps(
+          normalizeCandidateQa(candidate.candidate_qa),
+          candidateQa[candidate.slug] || {},
+        ),
       };
     })
     .sort((a, b) => (a.sort_order ?? a.nr) - (b.sort_order ?? b.nr));
@@ -196,10 +210,10 @@ export function PublicDataProvider({ children }) {
       setState({
         loading: false,
         source: 'supabase',
-        translations: {
-          ...fallbackTranslations,
-          ...rowsToTranslations(contentResult.data),
-        },
+        translations: mergeTranslationMaps(
+          fallbackTranslations,
+          rowsToTranslations(contentResult.data),
+        ),
         candidates: normalizeCandidates(candidatesResult.data).length
           ? normalizeCandidates(candidatesResult.data)
           : getFallbackCandidates(),

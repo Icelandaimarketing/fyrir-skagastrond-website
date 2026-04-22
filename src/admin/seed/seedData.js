@@ -1,5 +1,5 @@
 import translations from '../../i18n/translations';
-import qa from '../../data/candidateQA';
+import qa from '../../data/candidateQaContent';
 import { EXTRA_TRANSLATIONS, FALLBACK_BANNER_ITEMS, FALLBACK_POLICY_PAGES } from '../../data/fallbackContent';
 
 const LANGS = ['is', 'en', 'es', 'pl', 'de', 'da', 'no'];
@@ -128,7 +128,7 @@ export async function seedDatabase(supabase) {
     for (const candidate of allCandidates) {
       const candidateQa = qa[candidate.slug] || {};
       Object.entries(candidateQa).forEach(([questionKey, answers], sortIndex) => {
-        ['is', 'en'].forEach(lang => {
+        LANGS.forEach(lang => {
           if (!answers[lang]) return;
           qaRows.push({
             candidate_id: candidate.id,

@@ -1,4 +1,4 @@
-import baseCandidateQa from './candidateQA';
+import baseCandidateQa from './candidateQA.js';
 import candidateQaTranslations from './candidateQaTranslations.js';
 
 function mergeCandidateAnswers(baseAnswers = {}, translatedAnswers = {}) {

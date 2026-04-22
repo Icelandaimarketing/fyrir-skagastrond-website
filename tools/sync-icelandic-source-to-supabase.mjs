@@ -2,11 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createClient } from '@supabase/supabase-js';
-import candidateQa from '../src/data/candidateQA.js';
+import translations from '../src/i18n/translations.js';
+import candidateQa from '../src/data/candidateQaContent.js';
+import { EXTRA_TRANSLATIONS } from '../src/data/fallbackContent.js';
 import {
   buildPolicyPageContent,
   POLICY_ALIASES,
   POLICY_PROGRAM,
+  SUPPORTED_POLICY_LANGUAGES,
 } from '../src/data/policyProgram.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -111,6 +114,30 @@ function chunk(items, size = 100) {
   return result;
 }
 
+function buildSiteContentRows() {
+  return [translations, EXTRA_TRANSLATIONS].flatMap((source) =>
+    Object.entries(source).flatMap(([key, langMap]) =>
+      SUPPORTED_POLICY_LANGUAGES.map((lang) => ({
+        key,
+        lang,
+        value: langMap?.[lang] || langMap?.is || '',
+      })),
+    ),
+  );
+}
+
+async function syncSiteContent(supabase) {
+  const rows = buildSiteContentRows();
+  const { error } = await supabase
+    .from('site_content')
+    .upsert(rows, { onConflict: 'key,lang' });
+  if (error) throw error;
+
+  return {
+    upserted: rows.length,
+  };
+}
+
 async function updateCandidateNames(supabase, candidatesBySlug) {
   let updated = 0;
   for (const [slug, answers] of Object.entries(candidateQa)) {
@@ -141,7 +168,7 @@ function buildCandidateQaRows(candidatesBySlug) {
     let sortOrder = 0;
 
     for (const [questionKey, translations] of Object.entries(answers)) {
-      for (const lang of ['is', 'en']) {
+      for (const lang of SUPPORTED_POLICY_LANGUAGES) {
         const answer = translations?.[lang]?.trim();
         if (!answer) continue;
 
@@ -272,23 +299,23 @@ async function ensurePolicyPages(supabase) {
     pageIdBySlug.set(policyPage.slug, insertedPage.id);
   }
 
-  const usedPageIds = [...pageIdBySlug.values()];
-
-  const translationRows = POLICY_PROGRAM.map((policyPage) => ({
-    page_id: pageIdBySlug.get(policyPage.slug),
-    lang: 'is',
-    ...buildPolicyPageContent(policyPage),
-  }));
+  const allTranslationRows = POLICY_PROGRAM.flatMap((policyPage) =>
+    SUPPORTED_POLICY_LANGUAGES.map((lang) => ({
+      page_id: pageIdBySlug.get(policyPage.slug),
+      lang,
+      ...buildPolicyPageContent(policyPage, lang),
+    })),
+  );
 
   const { error: upsertTranslationsError } = await supabase
     .from('page_translations')
-    .upsert(translationRows, { onConflict: 'page_id,lang' });
+    .upsert(allTranslationRows, { onConflict: 'page_id,lang' });
   if (upsertTranslationsError) throw upsertTranslationsError;
 
   return {
     inserted,
     updated,
-    translationsUpserted: translationRows.length,
+    translationsUpserted: allTranslationRows.length,
   };
 }
 
@@ -314,11 +341,13 @@ async function main() {
 
   const candidatesBySlug = new Map((candidates || []).map((candidate) => [candidate.slug, candidate]));
 
+  const siteContentResult = await syncSiteContent(supabase);
   const namesUpdated = await updateCandidateNames(supabase, candidatesBySlug);
   const candidateQaResult = await syncCandidateQa(supabase, candidatesBySlug);
   const pageResult = await ensurePolicyPages(supabase);
 
   console.log(JSON.stringify({
+    siteContentUpserted: siteContentResult.upserted,
     namesUpdated,
     candidateQaUpserted: candidateQaResult.upserted,
     candidateQaDeleted: candidateQaResult.deleted,
