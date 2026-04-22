@@ -89,6 +89,7 @@ export const POLICY_PROGRAM = [
       'Við viljum stuðla að aukinni uppbyggingu íbúðarhúsnæðis á Skagaströnd til að mæta fjölbreyttum þörfum íbúa og styðja við vöxt samfélagsins. Sérstök áhersla verður lögð á að kanna möguleika á minni og aðgengilegum íbúðum fyrir heldra fólk t.d. með byggingu þjónustukjarna. Með því skapast fleiri valkostir fyrir þann hóp, auk þess sem stærri eignir geta losnað og orðið aðgengilegar fyrir fjölskyldur.',
       'Við leggjum einnig áherslu á að hvetja verktaka á svæðinu til virkrar þátttöku í þessari uppbyggingu og skapa þannig öflugt samstarf sem nýtist samfélaginu í heild.',
       'Samhliða þessu viljum við tryggja gott framboð af iðnaðar- og atvinnulóðum, þannig að fyrirtæki og einstaklingar hafi tækifæri til að byggja upp starfsemi sína á svæðinu. Með markvissri skipulagningu getum við laðað að ný tækifæri, styrkt atvinnulíf og stuðlað að sjálfbærri þróun Skagastrandar.',
+      'Við viljum jafnframt lækka fasteignagjöld þegar góð rekstrarstaða skapar svigrúm til þess.',
     ],
   },
   {
@@ -134,7 +135,7 @@ export const POLICY_PROGRAM = [
     image: '/Spákonufell.jpg',
     body: [
       'Við viljum að sveitarfélagið kanni markvisst hvernig hægt sé að efla ferðaþjónustu á Skagaströnd.',
-      'Þar verði meðal annars skoðað hvort og með hvaða hætti hægt sé að laða að skemmtiferðaskip og aðra ferðamenn, með það að markmiði að skapa ný störf og auka tekjur í samfélaginu.',
+      'Þar verði meðal annars skoðað hvort og með hvaða hætti hægt sé að laða að skemmtiferðaskip og aðra ferðamenn, með það að markmiði að skapa ný störf og auka tekjur í samfélaginu. Jafnframt viljum við gera fjallahjólabraut og skoða hvort hægt sé að nýta þann slóða sem þegar hefur verið lagður við Spákonufell.',
     ],
   },
   {
@@ -144,7 +145,9 @@ export const POLICY_PROGRAM = [
     category: 'Umhverfi',
     image: '/Frambjódendur.jpg',
     body: [
-      'Við viljum halda áfram að fegra Skagaströnd. Sveitarfélagið á að ganga þar fremst í flokki með því að bæta viðhald á eigin eignum, þar á meðal slippnum, og stuðla að snyrtilegu og aðlaðandi umhverfi.',
+      'Við viljum halda áfram að fegra Skagaströnd. Sveitarfélagið á að ganga þar fremst í flokki með því að bæta viðhald á eigin eignum og stuðla að snyrtilegu og aðlaðandi umhverfi.',
+      'Við viljum jafnframt tryggja að sveitarfélagið uppfylli skyldur sínar í úrgangsmálum og stuðli þannig að hreinu og heilnæmu umhverfi.',
+      'Við viljum halda áfram að vinna að fráveitumálum og tryggja að innviðir sveitafélagsins standist nútímakröfur um umhverfisvernd og öryggi.',
     ],
   },
   {
@@ -156,6 +159,7 @@ export const POLICY_PROGRAM = [
     body: [
       'Við viljum efla Skagaströnd sem áfangastað fyrir viðburði, listir og menningu.',
       'Með markvissri kynningu og uppbyggingu viljum við skapa meira líf í bænum og styrkja ímynd hans út á við. Við viljum halda áfram að styðja við viðburðahald í bænum, t.d. Hetjur hafsins.',
+      'Til að styðja við sundmenningu bæjarins og þjónustu við íbúa á öllum aldri hefur framboðið hug á að bæta aðstöðu við sundlaugina á ábyrgan hátt og kanna möguleika á því að bæta við öðrum potti eða vaðlaug.',
     ],
   },
   {

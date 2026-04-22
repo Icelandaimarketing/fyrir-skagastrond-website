@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '..');
 const ENV_PATH = path.join(ROOT, '.env.local');
-const POLICY_MD_PATH = path.join(ROOT, 'public', 'Málefnaskrá – Fyrir Skagaströnd .md');
+const POLICY_MD_PATH = path.join(ROOT, 'public', 'Málefnaskrá – Fyrir Skagaströnd.md');
 
 function readEnvFile(filePath) {
   return Object.fromEntries(
@@ -37,19 +37,39 @@ function normalizeText(value) {
 }
 
 function parsePolicyMarkdown(markdown) {
+  const policyTitles = new Set(POLICY_PROGRAM.map((page) => page.title));
   const sections = [];
-  const matches = [...markdown.matchAll(/^## \*\*(.+?)\*\*\s*$/gm)];
-  for (let index = 0; index < matches.length; index += 1) {
-    const start = matches[index].index + matches[index][0].length;
-    const end = index + 1 < matches.length ? matches[index + 1].index : markdown.length;
-    const title = matches[index][1].trim();
-    const rawBody = markdown.slice(start, end).replace(/\r/g, '').trim();
+  const lines = markdown.replace(/\r/g, '').split('\n');
+  let activeTitle = null;
+  let bodyLines = [];
+
+  const pushSection = () => {
+    if (!activeTitle) return;
+    const rawBody = bodyLines.join('\n').trim();
     sections.push({
-      title,
+      title: activeTitle,
       body: rawBody,
       normalized: normalizeText(rawBody.replace(/\n+/g, ' ')),
     });
+  };
+
+  for (const rawLine of lines) {
+    const trimmedLine = rawLine.trim();
+    const markdownHeading = trimmedLine.match(/^##\s+(?:\*\*(.+?)\*\*|(.+))\s*$/);
+    const candidateTitle = (markdownHeading?.[1] || markdownHeading?.[2] || trimmedLine).trim();
+
+    if (policyTitles.has(candidateTitle)) {
+      pushSection();
+      activeTitle = candidateTitle;
+      bodyLines = [];
+      continue;
+    }
+
+    if (!activeTitle) continue;
+    bodyLines.push(trimmedLine);
   }
+
+  pushSection();
   return sections;
 }
 
@@ -253,13 +273,6 @@ async function ensurePolicyPages(supabase) {
   }
 
   const usedPageIds = [...pageIdBySlug.values()];
-
-  const { error: deleteTranslationsError } = await supabase
-    .from('page_translations')
-    .delete()
-    .in('page_id', usedPageIds)
-    .neq('lang', 'is');
-  if (deleteTranslationsError) throw deleteTranslationsError;
 
   const translationRows = POLICY_PROGRAM.map((policyPage) => ({
     page_id: pageIdBySlug.get(policyPage.slug),
