@@ -1213,6 +1213,10 @@ ul, ol {
   gap: var(--space-3xl);
 }
 
+.contact__grid > * {
+  min-width: 0;
+}
+
 @media (min-width: 1024px) {
   .contact__grid {
     grid-template-columns: 1fr 0.85fr;
@@ -1233,6 +1237,7 @@ ul, ol {
   color: rgba(255, 255, 255, 0.65);
   max-width: 540px;
   margin-bottom: var(--space-2xl);
+  min-width: 0;
 }
 
 .contact__actions {
@@ -1245,6 +1250,7 @@ ul, ol {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
+  min-width: 0;
 }
 
 .contact__item {
@@ -1257,6 +1263,7 @@ ul, ol {
   align-items: center;
   gap: var(--space-md);
   transition: all var(--transition-base);
+  min-width: 0;
 }
 
 .contact__item:hover {
@@ -1286,6 +1293,8 @@ ul, ol {
   font-weight: 600;
   color: var(--white);
   margin-top: 2px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .contact__item-link {
@@ -4019,11 +4028,51 @@ ul, ol {
 .contact__item-body {
   display: grid;
   gap: 0.3rem;
+  min-width: 0;
 }
 
 @media (max-width: 960px) {
   .contact__grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact__card {
+    padding: 1.5rem 1.1rem;
+    border-radius: 28px;
+  }
+
+  .contact__grid {
+    gap: 1.75rem;
+  }
+
+  .contact__desc {
+    max-width: none;
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .contact__actions .btn {
+    width: 100%;
+  }
+
+  .contact__item {
+    padding: 1rem;
+    align-items: flex-start;
+    min-height: 0;
+  }
+
+  .contact__item-icon {
+    width: 40px;
+    height: 40px;
   }
 }
 
