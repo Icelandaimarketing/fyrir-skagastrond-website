@@ -18,6 +18,21 @@ const translations = {
   'nav.subtitle': {
     is: 'Sveitarstjórnarkosningar', en: 'Municipal Elections', es: 'Elecciones Municipales', pl: 'Wybory Samorządowe', de: 'Kommunalwahlen', da: 'Kommunalvalg', no: 'Kommunevalg',
   },
+  'nav.mainMenu': {
+    is: 'Aðalvalmynd', en: 'Main menu', es: 'Menú principal', pl: 'Menu główne', de: 'Hauptmenü', da: 'Hovedmenu', no: 'Hovedmeny',
+  },
+  'nav.openMenu': {
+    is: 'Opna valmynd', en: 'Open menu', es: 'Abrir menú', pl: 'Otwórz menu', de: 'Menü öffnen', da: 'Åbn menu', no: 'Åpne meny',
+  },
+  'nav.closeMenu': {
+    is: 'Loka valmynd', en: 'Close menu', es: 'Cerrar menú', pl: 'Zamknij menu', de: 'Menü schließen', da: 'Luk menu', no: 'Lukk meny',
+  },
+  'brand.name': {
+    is: 'Fyrir Skagaströnd', en: 'Fyrir Skagaströnd', es: 'Fyrir Skagaströnd', pl: 'Fyrir Skagaströnd', de: 'Fyrir Skagaströnd', da: 'Fyrir Skagaströnd', no: 'Fyrir Skagaströnd',
+  },
+  'brand.logoAlt': {
+    is: 'Merki Fyrir Skagaströnd', en: 'Fyrir Skagaströnd logo', es: 'Logotipo de Fyrir Skagaströnd', pl: 'Logo Fyrir Skagaströnd', de: 'Logo von Fyrir Skagaströnd', da: 'Fyrir Skagaströnd-logo', no: 'Fyrir Skagaströnd-logo',
+  },
 
   // ─── HERO ───
   'hero.badge': {
@@ -74,6 +89,21 @@ const translations = {
     da: 'Stem K · For folket, fællesskabet og fremtiden',
     no: 'Stem K · For folket, samfunnet og fremtiden',
   },
+  'hero.trustLineAria': {
+    is: 'Áherslur Fyrir Skagaströnd', en: 'Fyrir Skagaströnd priorities', es: 'Prioridades de Fyrir Skagaströnd', pl: 'Priorytety Fyrir Skagaströnd', de: 'Schwerpunkte von Fyrir Skagaströnd', da: 'Fyrir Skagaströnds prioriteter', no: 'Prioriteringene til Fyrir Skagaströnd',
+  },
+  'hero.image.open': {
+    is: 'Opna mynd í fullri stærð', en: 'Open image full size', es: 'Abrir imagen a tamaño completo', pl: 'Otwórz obraz w pełnym rozmiarze', de: 'Bild in voller Größe öffnen', da: 'Åbn billede i fuld størrelse', no: 'Åpne bilde i full størrelse',
+  },
+  'hero.image.hint': {
+    is: 'Smelltu til að stækka', en: 'Click to enlarge', es: 'Haz clic para ampliar', pl: 'Kliknij, aby powiększyć', de: 'Zum Vergrößern klicken', da: 'Klik for at forstørre', no: 'Klikk for å forstørre',
+  },
+  'hero.image.dialog': {
+    is: 'Mynd Fyrir Skagaströnd', en: 'Fyrir Skagaströnd image', es: 'Imagen de Fyrir Skagaströnd', pl: 'Obraz Fyrir Skagaströnd', de: 'Bild von Fyrir Skagaströnd', da: 'Billede af Fyrir Skagaströnd', no: 'Bilde av Fyrir Skagaströnd',
+  },
+  'hero.image.close': {
+    is: 'Loka', en: 'Close', es: 'Cerrar', pl: 'Zamknij', de: 'Schließen', da: 'Luk', no: 'Lukk',
+  },
 
   // ─── PILLARS ───
   'pillars.badge': {
@@ -90,6 +120,93 @@ const translations = {
     de: 'Drei Säulen, die alle unsere Entscheidungen leiten – Verantwortung, Gerechtigkeit und eine Zukunftsvision für Skagaströnd.',
     da: 'Tre søjler der styrer alle vores beslutninger – ansvar, retfærdighed og en fremtidsvision for Skagaströnd.',
     no: 'Tre pilarer som styrer alle våre beslutninger — ansvar, rettferdighet og en fremtidsvisjon for Skagaströnd.',
+  },
+  'policyShowcase.badge': {
+    is: 'Málefnaskrá',
+    en: 'Policy program',
+    es: 'Programa político',
+    pl: 'Program wyborczy',
+    de: 'Programm',
+    da: 'Politisk program',
+    no: 'Politisk program',
+  },
+  'policyShowcase.subtitle': {
+    is: 'Opnaðu málefnaskrána í heild eða flettu köflunum eins og opnum bókarkafla.',
+    en: 'Open the full policy document or browse the chapters like an open book.',
+    es: 'Abre el documento completo o recorre los capítulos como si fueran un libro abierto.',
+    pl: 'Otwórz cały dokument programu albo przeglądaj rozdziały jak otwartą książkę.',
+    de: 'Öffnen Sie das vollständige Programm oder blättern Sie durch die Kapitel wie durch ein aufgeschlagenes Buch.',
+    da: 'Åbn hele programmet eller blad gennem kapitlerne som i en opslået bog.',
+    no: 'Åpne hele programmet eller bla gjennom kapitlene som i en åpen bok.',
+  },
+  'policyShowcase.open': {
+    is: 'Opna í lesham',
+    en: 'Open reader',
+    es: 'Abrir lector',
+    pl: 'Otwórz czytnik',
+    de: 'Lesemodus öffnen',
+    da: 'Åbn læsetilstand',
+    no: 'Åpne lesemodus',
+  },
+  'policyShowcase.readMore': {
+    is: 'Lesa nánar',
+    en: 'Read more',
+    es: 'Leer más',
+    pl: 'Czytaj więcej',
+    de: 'Mehr lesen',
+    da: 'Læs mere',
+    no: 'Les mer',
+  },
+  'policyShowcase.previous': {
+    is: 'Fyrri síða',
+    en: 'Previous spread',
+    es: 'Pliego anterior',
+    pl: 'Poprzednia rozkładówka',
+    de: 'Vorherige Doppelseite',
+    da: 'Forrige opslag',
+    no: 'Forrige oppslag',
+  },
+  'policyShowcase.next': {
+    is: 'Næsta síða',
+    en: 'Next spread',
+    es: 'Siguiente pliego',
+    pl: 'Następna rozkładówka',
+    de: 'Nächste Doppelseite',
+    da: 'Næste opslag',
+    no: 'Neste oppslag',
+  },
+  'policyShowcase.close': {
+    is: 'Loka',
+    en: 'Close',
+    es: 'Cerrar',
+    pl: 'Zamknij',
+    de: 'Schließen',
+    da: 'Luk',
+    no: 'Lukk',
+  },
+  'policyShowcase.documentTitle': {
+    is: 'Málefnaskrá – Fyrir Skagaströnd', en: 'Policy programme – Fyrir Skagaströnd', es: 'Programa político – Fyrir Skagaströnd', pl: 'Program wyborczy – Fyrir Skagaströnd', de: 'Programm – Fyrir Skagaströnd', da: 'Politisk program – Fyrir Skagaströnd', no: 'Politisk program – Fyrir Skagaströnd',
+  },
+  'policyPage.upNext': {
+    is: 'Næsta mál',
+    en: 'Up next',
+    es: 'A continuación',
+    pl: 'Następnie',
+    de: 'Als Nächstes',
+    da: 'Næste emne',
+    no: 'Neste tema',
+  },
+  'policyPage.next': {
+    is: 'Fara í næsta mál',
+    en: 'Go to next policy',
+    es: 'Ir a la siguiente política',
+    pl: 'Przejdź do następnego tematu',
+    de: 'Zum nächsten Thema',
+    da: 'Gå til næste emne',
+    no: 'Gå til neste tema',
+  },
+  'policyPage.eyebrow': {
+    is: 'Málefnaskrá Fyrir Skagaströnd', en: 'Fyrir Skagaströnd policy programme', es: 'Programa político de Fyrir Skagaströnd', pl: 'Program wyborczy Fyrir Skagaströnd', de: 'Programm von Fyrir Skagaströnd', da: 'Fyrir Skagaströnds politiske program', no: 'Det politiske programmet til Fyrir Skagaströnd',
   },
   'pillar.finance.title': {
     is: 'Ábyrg fjármál', en: 'Responsible finance', es: 'Finanzas responsables', pl: 'Odpowiedzialne finanse', de: 'Verantwortungsvolle Finanzen', da: 'Ansvarlig økonomi', no: 'Ansvarlig økonomi',
@@ -294,6 +411,21 @@ const translations = {
   'profile.back.btn': {
     is: 'Til baka', en: 'Go back', es: 'Volver', pl: 'Wróć', de: 'Zurück', da: 'Tilbage', no: 'Tilbake',
   },
+  'profile.meta.age': {
+    is: 'Aldur', en: 'Age', es: 'Edad', pl: 'Wiek', de: 'Alter', da: 'Alder', no: 'Alder',
+  },
+  'profile.meta.family': {
+    is: 'Fjölskylda', en: 'Family', es: 'Familia', pl: 'Rodzina', de: 'Familie', da: 'Familie', no: 'Familie',
+  },
+  'profile.meta.favorite': {
+    is: 'Uppáhalds staður', en: 'Favourite place', es: 'Lugar favorito', pl: 'Ulubione miejsce', de: 'Lieblingsort', da: 'Yndlingssted', no: 'Favorittsted',
+  },
+  'profile.statement': {
+    is: 'Áherslur næsta kjörtímabils', en: 'Priorities for the next term', es: 'Prioridades para el próximo mandato', pl: 'Priorytety na następną kadencję', de: 'Prioritäten für die nächste Amtszeit', da: 'Prioriteter for næste valgperiode', no: 'Prioriteringer for neste valgperiode',
+  },
+  'profile.additional': {
+    is: 'Annað sem skiptir máli', en: 'Anything else to share', es: 'Algo más que compartir', pl: 'Co jeszcze warto dodać', de: 'Noch etwas, das wichtig ist', da: 'Andet der er værd at dele', no: 'Noe annet som er viktig å dele',
+  },
 
   // ─── FOOTER ───
   'footer.links': {
@@ -317,6 +449,9 @@ const translations = {
   'footer.developer': {
     is: 'Vefhönnun og þróun:', en: 'Design & development:', es: 'Diseño y desarrollo:', pl: 'Projekt i rozwój:', de: 'Design & Entwicklung:', da: 'Design & udvikling:', no: 'Design og utvikling:',
   },
+  'footer.facebook': {
+    is: 'Facebook', en: 'Facebook', es: 'Facebook', pl: 'Facebook', de: 'Facebook', da: 'Facebook', no: 'Facebook',
+  },
 
   // ─── FACEBOOK POSTS ───
   'fb.badge': {
@@ -336,6 +471,24 @@ const translations = {
   },
   'fb.seeall': {
     is: 'Sjá allar færslur á Facebook', en: 'See all posts on Facebook', es: 'Ver todas las publicaciones en Facebook', pl: 'Zobacz wszystkie posty na Facebooku', de: 'Alle Beiträge auf Facebook anzeigen', da: 'Se alle opslag på Facebook', no: 'Se alle innlegg på Facebook',
+  },
+  'fb.platform': {
+    is: 'Facebook', en: 'Facebook', es: 'Facebook', pl: 'Facebook', de: 'Facebook', da: 'Facebook', no: 'Facebook',
+  },
+  'fb.previous': {
+    is: 'Fyrri Facebook-færsla', en: 'Previous Facebook post', es: 'Publicación anterior de Facebook', pl: 'Poprzedni post na Facebooku', de: 'Vorheriger Facebook-Beitrag', da: 'Forrige Facebook-opslag', no: 'Forrige Facebook-innlegg',
+  },
+  'fb.next': {
+    is: 'Næsta Facebook-færsla', en: 'Next Facebook post', es: 'Siguiente publicación de Facebook', pl: 'Następny post na Facebooku', de: 'Nächster Facebook-Beitrag', da: 'Næste Facebook-opslag', no: 'Neste Facebook-innlegg',
+  },
+  'fb.progress': {
+    is: 'Facebook-færslur', en: 'Facebook posts', es: 'Publicaciones de Facebook', pl: 'Posty na Facebooku', de: 'Facebook-Beiträge', da: 'Facebook-opslag', no: 'Facebook-innlegg',
+  },
+  'fb.showPost': {
+    is: 'Sýna Facebook-færslu', en: 'Show Facebook post', es: 'Mostrar publicación de Facebook', pl: 'Pokaż post na Facebooku', de: 'Facebook-Beitrag anzeigen', da: 'Vis Facebook-opslag', no: 'Vis Facebook-innlegg',
+  },
+  'fb.post': {
+    is: 'Facebook-færsla', en: 'Facebook post', es: 'Publicación de Facebook', pl: 'Post na Facebooku', de: 'Facebook-Beitrag', da: 'Facebook-opslag', no: 'Facebook-innlegg',
   },
   'nav.frettir': {
     is: 'Fréttir', en: 'News', es: 'Noticias', pl: 'Aktualności', de: 'Neuigkeiten', da: 'Nyheder', no: 'Nyheter',
@@ -492,6 +645,48 @@ const translations = {
   },
   'qa.q.annad': {
     is: 'Annað sem þú vilt deila?', en: 'Anything else you\'d like to share?', es: '¿Algo más que quieras compartir?', pl: 'Coś jeszcze, czym chcesz się podzielić?', de: 'Möchtest du noch etwas teilen?', da: 'Er der andet du vil dele?', no: 'Er det noe annet du vil dele?',
+  },
+  'about.readMore': {
+    is: 'Lesa nánar', en: 'Read more', es: 'Leer más', pl: 'Czytaj więcej', de: 'Mehr lesen', da: 'Læs mere', no: 'Les mer',
+  },
+  'about.card.transparency.title': {
+    is: 'Gagnsæi í stjórnun', en: 'Transparency in governance', es: 'Transparencia en la gestión', pl: 'Przejrzystość w zarządzaniu', de: 'Transparenz in der Verwaltung', da: 'Gennemsigtighed i ledelsen', no: 'Åpenhet i styringen',
+  },
+  'about.card.transparency.summary': {
+    is: 'Upplýsingar eiga að vera aðgengilegar og ákvarðanir teknar á skýran og málefnalegan hátt.', en: 'Information should be accessible and decisions taken clearly and on their merits.', es: 'La información debe ser accesible y las decisiones deben tomarse con claridad y criterio.', pl: 'Informacje powinny być dostępne, a decyzje podejmowane jasno i merytorycznie.', de: 'Informationen sollen zugänglich sein und Entscheidungen klar und sachlich getroffen werden.', da: 'Information skal være tilgængelig, og beslutninger skal træffes klart og sagligt.', no: 'Informasjon skal være tilgjengelig, og beslutninger skal tas klart og saklig.',
+  },
+  'about.card.transparency.category': {
+    is: 'Traust', en: 'Trust', es: 'Confianza', pl: 'Zaufanie', de: 'Vertrauen', da: 'Tillid', no: 'Tillit',
+  },
+  'about.card.infrastructure.title': {
+    is: 'Styrkja innviði', en: 'Strengthen infrastructure', es: 'Fortalecer la infraestructura', pl: 'Wzmocnić infrastrukturę', de: 'Infrastruktur stärken', da: 'Styrke infrastrukturen', no: 'Styrke infrastrukturen',
+  },
+  'about.card.infrastructure.summary': {
+    is: 'Ábyrg uppbygging í húsnæði, þjónustu og aðstöðu sem styður við vöxt samfélagsins.', en: 'Responsible development in housing, services and facilities that supports community growth.', es: 'Desarrollo responsable en vivienda, servicios e instalaciones que apoye el crecimiento de la comunidad.', pl: 'Odpowiedzialny rozwój mieszkań, usług i infrastruktury wspierający rozwój społeczności.', de: 'Verantwortungsvolle Entwicklung bei Wohnraum, Dienstleistungen und Einrichtungen, die das Wachstum der Gemeinschaft unterstützt.', da: 'Ansvarlig udvikling af boliger, service og faciliteter, der understøtter samfundets vækst.', no: 'Ansvarlig utvikling av boliger, tjenester og fasiliteter som støtter veksten i samfunnet.',
+  },
+  'about.card.infrastructure.category': {
+    is: 'Innviðir', en: 'Infrastructure', es: 'Infraestructura', pl: 'Infrastruktura', de: 'Infrastruktur', da: 'Infrastruktur', no: 'Infrastruktur',
+  },
+  'about.card.business.title': {
+    is: 'Atvinnuuppbygging', en: 'Business growth', es: 'Desarrollo empresarial', pl: 'Rozwój gospodarczy', de: 'Wirtschaftsentwicklung', da: 'Erhvervsudvikling', no: 'Næringsutvikling',
+  },
+  'about.card.business.summary': {
+    is: 'Raunhæfar leiðir til að laða að fyrirtæki, ný störf og tækifæri á svæðinu.', en: 'Realistic ways to attract companies, new jobs and opportunities to the area.', es: 'Vías realistas para atraer empresas, nuevos empleos y oportunidades a la zona.', pl: 'Realistyczne sposoby na przyciągnięcie firm, nowych miejsc pracy i możliwości do regionu.', de: 'Realistische Wege, Unternehmen, neue Arbeitsplätze und Chancen in die Region zu holen.', da: 'Realistiske måder at tiltrække virksomheder, nye job og muligheder til området.', no: 'Realistiske måter å tiltrekke bedrifter, nye jobber og muligheter til området.',
+  },
+  'about.card.business.category': {
+    is: 'Atvinna', en: 'Employment', es: 'Empleo', pl: 'Praca', de: 'Arbeit', da: 'Beskæftigelse', no: 'Arbeid',
+  },
+  'banner.previous': {
+    is: 'Skruna til baka', en: 'Scroll backward', es: 'Desplazar hacia atrás', pl: 'Przewiń wstecz', de: 'Zurück scrollen', da: 'Rul tilbage', no: 'Rull bakover',
+  },
+  'banner.next': {
+    is: 'Skruna áfram', en: 'Scroll forward', es: 'Desplazar hacia adelante', pl: 'Przewiń dalej', de: 'Weiter scrollen', da: 'Rul frem', no: 'Rull fremover',
+  },
+  'languageSwitcher.aria': {
+    is: 'Velja tungumál', en: 'Choose language', es: 'Elegir idioma', pl: 'Wybierz język', de: 'Sprache auswählen', da: 'Vælg sprog', no: 'Velg språk',
+  },
+  'app.loadingAdmin': {
+    is: 'Hleð inn stjórnborði…', en: 'Loading admin…', es: 'Cargando administración…', pl: 'Ładowanie panelu administracyjnego…', de: 'Administration wird geladen…', da: 'Indlæser administration…', no: 'Laster inn admin…',
   },
 
   // ─── LEGAL PAGES ───

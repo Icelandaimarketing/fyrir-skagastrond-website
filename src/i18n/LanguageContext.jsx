@@ -15,7 +15,8 @@ export const LANGUAGES = [
 export function LanguageProvider({ children }) {
   const [lang, setLang] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('fs-lang') || 'is';
+      const stored = localStorage.getItem('fs-lang') || 'is';
+      return LANGUAGES.some((language) => language.code === stored) ? stored : 'is';
     }
     return 'is';
   });

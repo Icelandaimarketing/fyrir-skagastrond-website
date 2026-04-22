@@ -10,6 +10,8 @@ const PAGE_TITLES = {
   '/admin/candidates': { is: 'Frambjóðendur', en: 'Candidates' },
   '/admin/facebook': { is: 'Facebook færslur', en: 'Facebook Posts' },
   '/admin/contact': { is: 'Sambandsupplýsingar', en: 'Contact Details' },
+  '/admin/banner': { is: 'Skroll banner', en: 'Scrolling Banner' },
+  '/admin/pages': { is: 'Malefnasidur', en: 'Policy Pages' },
   '/admin/seo': { is: 'SEO stillingar', en: 'SEO Settings' },
   '/admin/media': { is: 'Myndabanki', en: 'Media Library' },
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAdminLang } from '../context/AdminLangContext';
 import { useAdminAuth } from '../context/AdminAuthContext';
-import { supabase } from '../../lib/supabase';
+import { isSupabaseConfigured, supabase } from '../../lib/supabase';
 import { seedDatabase } from '../seed/seedData';
 import toast from 'react-hot-toast';
 
@@ -54,19 +54,36 @@ export default function DashboardHome() {
   const [dbEmpty, setDbEmpty] = useState(null); // null = loading, true/false
   const [seedDone, setSeedDone] = useState(false);
 
-  // Check if DB is empty
+  // Check if the CMS defaults are missing
   React.useEffect(() => {
     async function check() {
+      if (!isSupabaseConfigured || !supabase) {
+        setDbEmpty(true);
+        return;
+      }
       try {
-        const { data, error } = await supabase.from('site_content').select('id').limit(1);
-        if (error) { setDbEmpty(true); return; }
-        setDbEmpty(!data || data.length === 0);
+        const checks = await Promise.all([
+          supabase.from('site_content').select('id', { count: 'exact', head: true }),
+          supabase.from('candidates').select('id', { count: 'exact', head: true }),
+          supabase.from('candidate_qa').select('id', { count: 'exact', head: true }),
+          supabase.from('banner_items').select('id', { count: 'exact', head: true }),
+          supabase.from('pages').select('id', { count: 'exact', head: true }),
+        ]);
+        if (checks.some(result => result.error)) {
+          setDbEmpty(true);
+          return;
+        }
+        setDbEmpty(checks.some(result => !result.count));
       } catch { setDbEmpty(true); }
     }
     check();
   }, []);
 
   async function handleSeed() {
+    if (!isSupabaseConfigured || !supabase) {
+      toast.error(lang === 'is' ? 'Supabase stillingar vantar' : 'Missing Supabase configuration');
+      return;
+    }
     setSeeding(true);
     const result = await seedDatabase(supabase);
     setSeeding(false);

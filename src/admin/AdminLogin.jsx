@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAdminAuth } from './context/AdminAuthContext';
 import { useAdminLang } from './context/AdminLangContext';
+import { isSupabaseConfigured } from '../lib/supabase';
 import './admin.css';
 
 export default function AdminLogin() {
@@ -16,9 +17,12 @@ export default function AdminLogin() {
     setError('');
     setLoading(true);
     try {
+      if (!isSupabaseConfigured) {
+        throw new Error('Supabase is not configured');
+      }
       await signIn(email, password);
     } catch (err) {
-      setError(t('login.error'));
+      setError(isSupabaseConfigured ? t('login.error') : t('login.config_error'));
     } finally {
       setLoading(false);
     }
@@ -47,7 +51,7 @@ export default function AdminLogin() {
             <img src="/F Skagastrond.jpg" alt="Fyrir Skagaströnd" className="admin-login-logo__img" />
             <div className="admin-login-logo__text">
               <span className="admin-login-logo__name">Fyrir Skagaströnd</span>
-              <span className="admin-login-logo__sub">Admin Dashboard</span>
+              <span className="admin-login-logo__sub">{t('admin.brand_subtitle')}</span>
             </div>
           </div>
 

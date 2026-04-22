@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import { useAdminLang } from '../context/AdminLangContext';
+import { getCandidateFallbackImage } from '../../data/candidateImageFallbacks';
 
 export default function CandidatesManager() {
   const { t, lang } = useAdminLang();
@@ -14,7 +15,8 @@ export default function CandidatesManager() {
         .from('candidates')
         .select(`
           id, nr, name, slug, image_url, is_published,
-          candidate_translations (lang, role)
+          candidate_translations (lang, role),
+          candidate_images (url, is_primary, is_published, sort_order)
         `)
         .order('nr');
       if (!error && data) {
@@ -22,7 +24,10 @@ export default function CandidatesManager() {
           const isLang = c.candidate_translations?.find(t => t.lang === 'is');
           const enLang = c.candidate_translations?.find(t => t.lang === 'en');
           const role = lang === 'en' ? (enLang?.role || isLang?.role || '') : (isLang?.role || '');
-          return { ...c, role };
+          const images = (c.candidate_images || [])
+            .filter(img => img.is_published !== false)
+            .sort((a, b) => Number(b.is_primary) - Number(a.is_primary) || (a.sort_order || 0) - (b.sort_order || 0));
+          return { ...c, role, image_url: images[0]?.url || c.image_url, fallback_image_url: getCandidateFallbackImage(c.slug) };
         }));
       }
       setLoading(false);
@@ -70,10 +75,17 @@ export default function CandidatesManager() {
             >
               <div className="admin-candidate-card__photo">
                 <img
-                  src={candidate.image_url || '/F Skagastrond.jpg'}
+                  src={candidate.image_url || candidate.fallback_image_url}
                   alt={candidate.name}
                   className="admin-candidate-card__img"
-                  onError={e => { e.target.src = '/F Skagastrond.jpg'; }}
+                  onError={e => {
+                    if (e.currentTarget.dataset.fallbackApplied) {
+                      e.currentTarget.src = '/F Skagastrond.jpg';
+                      return;
+                    }
+                    e.currentTarget.dataset.fallbackApplied = 'true';
+                    e.currentTarget.src = candidate.fallback_image_url;
+                  }}
                 />
                 <div className={`admin-candidate-card__nr ${candidate.nr === 1 ? 'admin-candidate-card__nr--lead' : ''}`}>
                   {candidate.nr}

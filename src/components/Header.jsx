@@ -31,28 +31,28 @@ export default function Header() {
     <>
       <header className={`header ${scrolled ? 'header--scrolled' : ''}`}>
         <div className="container header__inner">
-          <Link to="/" className="header__brand" aria-label="Fyrir Skagaströnd">
+          <Link to="/" className="header__brand" aria-label={t('brand.name')}>
             <div className="header__logo">
               <img
                 src="/F Skagastrond.jpg"
-                alt="Fyrir Skagaströnd merki"
+                alt={t('brand.logoAlt')}
                 className="header__logo-img"
               />
             </div>
             <div className="header__brand-text">
-              <span className="header__brand-name">Fyrir Skagaströnd</span>
+              <span className="header__brand-name">{t('brand.name')}</span>
               <span className="header__brand-sub">{t('nav.subtitle')}</span>
             </div>
           </Link>
 
-          <nav className="header__nav" aria-label="Aðalvalmynd">
+          <nav className="header__nav" aria-label={t('nav.mainMenu')}>
             {navLinks.map(link => (
               <a key={link.href} href={link.href} className="header__nav-link">
                 {link.label}
               </a>
             ))}
             <LanguageSwitcher />
-            <a href="/#samband" className="header__nav-cta">X við K</a>
+            <a href="/#samband" className="header__nav-cta">{t('hero.cta')}</a>
           </nav>
 
           <div className="header__mobile-right">
@@ -60,7 +60,7 @@ export default function Header() {
             <button
               className="header__mobile-btn"
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label={menuOpen ? 'Loka valmynd' : 'Opna valmynd'}
+              aria-label={menuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
               aria-expanded={menuOpen}
             >
               <span style={menuOpen ? { transform: 'rotate(45deg) translate(4px, 4px)' } : {}} />
@@ -78,7 +78,7 @@ export default function Header() {
           </a>
         ))}
         <a href="/#samband" className="mobile-menu__cta" onClick={() => setMenuOpen(false)}>
-          X við K
+          {t('hero.cta')}
         </a>
       </div>
     </>

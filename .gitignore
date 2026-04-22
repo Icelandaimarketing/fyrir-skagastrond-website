@@ -30,13 +30,20 @@ desktop.ini
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.codex-preview*.log
+.codex-vite*.log
 
 # Misc
 *.tsbuildinfo
+.playwright-cli/
 
 # Local Netlify folder
 .netlify
 
 # Server-only scripts (may reference env vars / service keys)
 upload-*.mjs
+maintenance-*.mjs
 scripts/
+
+# Local agent notes
+CODEX_PROJECT_WORKING_NOTES.md

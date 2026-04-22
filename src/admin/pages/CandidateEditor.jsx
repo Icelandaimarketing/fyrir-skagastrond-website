@@ -5,6 +5,7 @@ import { useAdminLang } from '../context/AdminLangContext';
 import ImageUploader from '../components/ImageUploader';
 import ConfirmDialog from '../components/ConfirmDialog';
 import toast from 'react-hot-toast';
+import { getCandidateFallbackImage } from '../../data/candidateImageFallbacks';
 
 const LANGS = [
   { code: 'is', label: 'IS', flag: '🇮🇸', full: 'Íslenska' },
@@ -29,17 +30,20 @@ export default function CandidateEditor() {
   const [activeTab, setActiveTab] = useState('is');
   const [activeField, setActiveField] = useState('role'); // 'role' | 'bio'
   const [imageUrl, setImageUrl] = useState('');
+  const [gallery, setGallery] = useState([]);
 
   useEffect(() => {
     async function load() {
       const { data, error } = await supabase
         .from('candidates')
-        .select(`*, candidate_translations(*)`)
+        .select(`*, candidate_translations(*), candidate_images(*)`)
         .eq('slug', slug)
         .single();
       if (!error && data) {
         setCandidate(data);
-        setImageUrl(data.image_url || '');
+        const images = [...(data.candidate_images || [])].sort((a, b) => Number(b.is_primary) - Number(a.is_primary) || (a.sort_order || 0) - (b.sort_order || 0));
+        setGallery(images);
+        setImageUrl(images.find(img => img.is_primary)?.url || data.image_url || '');
         const t = {};
         const d = {};
         data.candidate_translations?.forEach(tr => {
@@ -79,7 +83,7 @@ export default function CandidateEditor() {
       }));
       const { error } = await supabase.from('candidate_translations').upsert(rows, { onConflict: 'candidate_id,lang' });
       if (error) throw error;
-      toast.success(lang === 'is' ? 'Drög vistuð!' : 'Draft saved!');
+      toast.success(t('content.saved'));
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -106,13 +110,22 @@ export default function CandidateEditor() {
       // Update image if changed
       if (imageUrl && imageUrl !== candidate.image_url) {
         await supabase.from('candidates').update({ image_url: imageUrl }).eq('id', cand.id);
+        await supabase.from('candidate_images').upsert({
+          candidate_id: cand.id,
+          storage_path: `${candidate.slug}/profile.jpg`,
+          url: imageUrl,
+          alt_text: candidate.name,
+          sort_order: 0,
+          is_primary: true,
+          is_published: true,
+        }, { onConflict: 'candidate_id,storage_path' });
       }
       setTranslations(prev => {
         const n = {};
         LANGS.forEach(l => { n[l.code] = { role: draftTrans[l.code]?.role || '', bio: draftTrans[l.code]?.bio || '' }; });
         return n;
       });
-      toast.success(lang === 'is' ? '✓ Birt á vefsíðunni!' : '✓ Published to the website!');
+      toast.success(t('content.published'));
     } catch (err) {
       toast.error(err.message);
     } finally {
@@ -121,11 +134,12 @@ export default function CandidateEditor() {
   }
 
   if (loading) return <div className="admin-page" style={{color:'var(--admin-text-3)',textAlign:'center',paddingTop:'3rem'}}>{t('general.loading')}</div>;
-  if (!candidate) return <div className="admin-page"><div style={{color:'var(--admin-text-2)'}}>Candidate not found.</div></div>;
+  if (!candidate) return <div className="admin-page"><div style={{color:'var(--admin-text-2)'}}>{t('candidates.not_found')}</div></div>;
 
   const currentDraft = draftTrans[activeTab] || {};
   const currentLive = translations[activeTab] || {};
   const isLead = candidate.nr === 1;
+  const fallbackImageUrl = getCandidateFallbackImage(candidate.slug);
 
   return (
     <div className="admin-page" style={{ maxWidth: '900px' }}>
@@ -152,16 +166,16 @@ export default function CandidateEditor() {
             </h1>
             {isLead && (
               <span className="admin-badge admin-badge--live" style={{ marginTop: '0.5rem' }}>
-                ⭐ {lang === 'is' ? 'Oddviti' : 'Lead candidate'}
+                ⭐ {t('candidates.lead')}
               </span>
             )}
           </div>
           <div style={{ display: 'flex', gap: '0.75rem' }}>
             <button className="admin-btn admin-btn--secondary" onClick={saveDraft} disabled={saving}>
-              {saving ? (lang === 'is' ? 'Vistar...' : 'Saving...') : (lang === 'is' ? 'Vista drög' : 'Save draft')}
+              {saving ? t('content.saving') : t('content.save_draft')}
             </button>
             <button className="admin-btn admin-btn--primary" onClick={() => setConfirmPublish(true)} disabled={publishing}>
-              {publishing ? (lang === 'is' ? 'Birtir...' : 'Publishing...') : (lang === 'is' ? 'Birta breytingar' : 'Publish changes')}
+              {publishing ? t('content.publishing') : t('content.publish')}
             </button>
           </div>
         </div>
@@ -177,15 +191,29 @@ export default function CandidateEditor() {
             <div className="admin-card__body">
               <ImageUploader
                 bucket="candidate-photos"
-                path={`${candidate.slug}.jpg`}
-                currentUrl={imageUrl}
+                path={`${candidate.slug}/profile.jpg`}
+                currentUrl={imageUrl || fallbackImageUrl}
+                fallbackUrl={fallbackImageUrl}
                 onUploaded={(url) => setImageUrl(url)}
               />
+              {gallery.length > 0 && (
+                <div className="admin-gallery-strip">
+                  {gallery.map(image => (
+                    <img
+                      key={image.id}
+                      src={image.url}
+                      alt={image.alt_text || candidate.name}
+                      className={`admin-gallery-thumb ${image.is_primary ? 'active' : ''}`}
+                      onError={event => { event.currentTarget.src = fallbackImageUrl; }}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <div className="admin-card" style={{ marginTop: '1rem' }}>
             <div className="admin-card__header">
-              <div className="admin-card__title">{lang === 'is' ? 'Nafn' : 'Name'}</div>
+              <div className="admin-card__title">{t('candidates.name')}</div>
             </div>
             <div className="admin-card__body">
               <div style={{ fontSize: '13px', color: 'var(--admin-text-1)', fontWeight: 600, marginBottom: '0.4rem' }}>
@@ -223,10 +251,7 @@ export default function CandidateEditor() {
                 className={`admin-btn ${activeField === f ? 'admin-btn--primary' : 'admin-btn--secondary'} admin-btn--sm`}
                 onClick={() => setActiveField(f)}
               >
-                {f === 'role'
-                  ? (lang === 'is' ? 'Starfsheiti' : 'Job title')
-                  : (lang === 'is' ? 'Ævisaga / Kynning' : 'Biography')
-                }
+                {f === 'role' ? t('candidates.role') : t('candidates.bio')}
               </button>
             ))}
           </div>
@@ -238,14 +263,11 @@ export default function CandidateEditor() {
                 <div className="admin-card__title">
                   {LANGS.find(l => l.code === activeTab)?.flag} {LANGS.find(l => l.code === activeTab)?.full}
                   {' — '}
-                  {activeField === 'role'
-                    ? (lang === 'is' ? 'Starfsheiti' : 'Job title')
-                    : (lang === 'is' ? 'Ævisaga / Kynning' : 'Biography')
-                  }
+                  {activeField === 'role' ? t('candidates.role') : t('candidates.bio')}
                 </div>
                 {currentLive[activeField] && currentDraft[activeField] !== currentLive[activeField] && (
                   <div className="admin-card__subtitle" style={{ color: 'var(--admin-amber)', marginTop: '2px' }}>
-                    {lang === 'is' ? '⚠ Óbirtar breytingar' : '⚠ Unsaved changes'}
+                    ⚠ {t('content.has_draft')}
                   </div>
                 )}
               </div>
@@ -257,7 +279,7 @@ export default function CandidateEditor() {
                   className="admin-input"
                   value={currentDraft.role || ''}
                   onChange={e => handleChange(activeTab, 'role', e.target.value)}
-                  placeholder={lang === 'is' ? 'Starfsheiti á þessu tungumáli...' : 'Job title in this language...'}
+                  placeholder={t('candidates.role_placeholder')}
                 />
               ) : (
                 <textarea
@@ -265,7 +287,7 @@ export default function CandidateEditor() {
                   value={currentDraft.bio || ''}
                   onChange={e => handleChange(activeTab, 'bio', e.target.value)}
                   rows={8}
-                  placeholder={lang === 'is' ? 'Ævisaga og kynning á þessu tungumáli...' : 'Biography in this language...'}
+                  placeholder={t('candidates.bio_placeholder')}
                 />
               )}
 
@@ -273,7 +295,7 @@ export default function CandidateEditor() {
               {currentLive[activeField] && currentDraft[activeField] !== currentLive[activeField] && (
                 <div>
                   <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--admin-text-3)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
-                    {lang === 'is' ? 'Birt á vef' : 'Currently live'}
+                    {t('content.current_live')}
                   </div>
                   <div className="field-editor__live-value">{currentLive[activeField]}</div>
                 </div>

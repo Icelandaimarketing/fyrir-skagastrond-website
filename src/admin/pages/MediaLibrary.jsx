@@ -3,28 +3,35 @@ import { supabase } from '../../lib/supabase';
 import { useAdminLang } from '../context/AdminLangContext';
 import ConfirmDialog from '../components/ConfirmDialog';
 import toast from 'react-hot-toast';
+import { deleteMediaAssetRecords, loadMediaImages, MEDIA_BUCKETS, uploadMediaAsset } from '../lib/mediaAssets';
 
 export default function MediaLibrary() {
   const { lang } = useAdminLang();
   const [images, setImages] = useState([]);
+  const [activeBucket, setActiveBucket] = useState('all');
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [copiedUrl, setCopiedUrl] = useState(null);
+  const [loadError, setLoadError] = useState('');
 
   async function load() {
-    const { data, error } = await supabase.storage.from('site-images').list('', { limit: 100, sortBy: { column: 'created_at', order: 'desc' } });
-    if (!error && data) {
-      const imgs = data
-        .filter(f => f.name && !f.name.startsWith('.'))
-        .map(f => ({
-          name: f.name,
-          url: supabase.storage.from('site-images').getPublicUrl(f.name).data.publicUrl,
-          size: f.metadata?.size,
-        }));
-      setImages(imgs);
+    setLoading(true);
+    setLoadError('');
+    try {
+      const { images: nextImages, errors } = await loadMediaImages();
+      setImages(nextImages);
+      if (errors.length) {
+        setLoadError(errors.join(' | '));
+      }
+    } catch (error) {
+      const message = error.message || String(error);
+      setLoadError(message);
+      toast.error(message);
+      setImages([]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   useEffect(() => { load(); }, []);
@@ -37,11 +44,16 @@ export default function MediaLibrary() {
       return;
     }
     setUploading(true);
-    const filePath = `${Date.now()}-${file.name.replace(/\s/g, '_')}`;
-    const { error } = await supabase.storage.from('site-images').upload(filePath, file, { contentType: file.type });
-    if (error) { toast.error(error.message); } else {
+    const uploadBucket = activeBucket === 'candidate-photos' ? 'candidate-photos' : 'site-images';
+    try {
+      await uploadMediaAsset(file, {
+        bucket: uploadBucket,
+        usage: uploadBucket === 'candidate-photos' ? 'candidate gallery' : 'general',
+      });
       toast.success(lang === 'is' ? 'Mynd hlaðin upp!' : 'Image uploaded!');
       load();
+    } catch (error) {
+      toast.error(error.message);
     }
     setUploading(false);
     e.target.value = '';
@@ -49,8 +61,9 @@ export default function MediaLibrary() {
 
   async function deleteImage() {
     if (!deleteTarget) return;
-    const { error } = await supabase.storage.from('site-images').remove([deleteTarget.name]);
+    const { error } = await supabase.storage.from(deleteTarget.bucket).remove([deleteTarget.path]);
     if (error) { toast.error(error.message); } else {
+      await deleteMediaAssetRecords(deleteTarget);
       toast.success(lang === 'is' ? 'Mynd eytt!' : 'Image deleted!');
       setDeleteTarget(null);
       load();
@@ -64,6 +77,10 @@ export default function MediaLibrary() {
       toast.success(lang === 'is' ? 'Slóð afrituð!' : 'URL copied!');
     });
   }
+
+  const filteredImages = activeBucket === 'all'
+    ? images
+    : images.filter(img => img.bucket === activeBucket);
 
   return (
     <div className="admin-page">
@@ -98,11 +115,36 @@ export default function MediaLibrary() {
         </div>
       </div>
 
+      <div className="admin-media-toolbar">
+        <button
+          className={`admin-btn admin-btn--sm ${activeBucket === 'all' ? 'admin-btn--primary' : 'admin-btn--secondary'}`}
+          onClick={() => setActiveBucket('all')}
+        >
+          {lang === 'is' ? 'Allar myndir' : 'All images'} ({images.length})
+        </button>
+        {MEDIA_BUCKETS.map(bucket => (
+          <button
+            key={bucket.id}
+            className={`admin-btn admin-btn--sm ${activeBucket === bucket.id ? 'admin-btn--primary' : 'admin-btn--secondary'}`}
+            onClick={() => setActiveBucket(bucket.id)}
+          >
+            {bucket.label} ({images.filter(img => img.bucket === bucket.id).length})
+          </button>
+        ))}
+      </div>
+
+      {loadError && (
+        <div className="admin-alert admin-alert--error">
+          {lang === 'is' ? 'Ekki tókst að sækja myndir: ' : 'Could not load images: '}
+          {loadError}
+        </div>
+      )}
+
       {loading ? (
         <div style={{ color: 'var(--admin-text-3)', textAlign: 'center', paddingTop: '2rem' }}>
           {lang === 'is' ? 'Hleður...' : 'Loading...'}
         </div>
-      ) : images.length === 0 ? (
+      ) : filteredImages.length === 0 ? (
         <div className="admin-empty">
           <svg className="admin-empty__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
@@ -111,8 +153,8 @@ export default function MediaLibrary() {
         </div>
       ) : (
         <div className="admin-media-grid">
-          {images.map(img => (
-            <div key={img.name} className="admin-media-item">
+          {filteredImages.map(img => (
+            <div key={img.id || `${img.bucket}:${img.path}`} className="admin-media-item">
               <img src={img.url} alt={img.name} className="admin-media-item__img" />
               <div className="admin-media-item__overlay">
                 <button
@@ -135,7 +177,10 @@ export default function MediaLibrary() {
                   </svg>
                 </button>
               </div>
-              <div className="admin-media-item__name">{img.name}</div>
+              <div className="admin-media-item__name">
+                <span>{img.name}</span>
+                <small>{img.bucket}</small>
+              </div>
             </div>
           ))}
         </div>

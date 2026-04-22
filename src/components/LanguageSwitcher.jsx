@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage, LANGUAGES } from '../i18n/LanguageContext';
+import { useTranslation } from '../i18n/useTranslation';
 
 export default function LanguageSwitcher() {
   const { lang, setLang } = useLanguage();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -24,7 +26,7 @@ export default function LanguageSwitcher() {
       <button
         className="lang-switcher__btn"
         onClick={() => setOpen(!open)}
-        aria-label="Velja tungumál / Choose language"
+        aria-label={t('languageSwitcher.aria')}
         aria-expanded={open}
       >
         <span className="lang-switcher__flag">{current.flag}</span>

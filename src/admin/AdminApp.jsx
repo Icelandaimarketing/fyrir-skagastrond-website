@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AdminAuthProvider, useAdminAuth } from './context/AdminAuthContext';
-import { AdminLangProvider } from './context/AdminLangContext';
+import { AdminLangProvider, useAdminLang } from './context/AdminLangContext';
 import AdminLogin from './AdminLogin';
 import AdminLayout from './AdminLayout';
 import DashboardHome from './pages/DashboardHome';
@@ -13,10 +13,13 @@ import FacebookManager from './pages/FacebookManager';
 import ContactEditor from './pages/ContactEditor';
 import SEOEditor from './pages/SEOEditor';
 import MediaLibrary from './pages/MediaLibrary';
+import BannerManager from './pages/BannerManager';
+import PagesManager from './pages/PagesManager';
 import './admin.css';
 
 function ProtectedRoutes() {
-  const { user, loading } = useAdminAuth();
+  const { user, profile, authError, loading, signOut } = useAdminAuth();
+  const { t } = useAdminLang();
 
   if (loading) {
     return (
@@ -25,7 +28,7 @@ function ProtectedRoutes() {
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: 'spin 1s linear infinite', margin: '0 auto 1rem' }}>
             <path d="M21 12a9 9 0 1 1-6.219-8.56" />
           </svg>
-          <div style={{ fontSize: '14px' }}>Hleður...</div>
+          <div style={{ fontSize: '14px' }}>{t('app.loading')}</div>
         </div>
         <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
       </div>
@@ -33,6 +36,30 @@ function ProtectedRoutes() {
   }
 
   if (!user) return <Navigate to="/admin/login" replace />;
+
+  if (!profile) {
+    return (
+      <div className="admin-root" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '2rem' }}>
+        <div className="admin-card" style={{ maxWidth: '520px', width: '100%' }}>
+          <div className="admin-card__body" style={{ textAlign: 'center' }}>
+            <div className="admin-dialog__icon" style={{ margin: '0 auto 1.25rem' }}>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <h1 className="admin-login__title">{t('auth.access_disabled.title')}</h1>
+            <p className="admin-login__subtitle" style={{ lineHeight: 1.6 }}>
+              {t('auth.access_disabled.body')} <code>admin_profiles</code>.
+              {authError ? ` ${authError}` : ''}
+            </p>
+            <button className="admin-btn admin-btn--primary" onClick={signOut}>
+              {t('topbar.logout')}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <AdminLayout>
@@ -43,6 +70,8 @@ function ProtectedRoutes() {
         <Route path="candidates/:slug" element={<CandidateEditor />} />
         <Route path="facebook" element={<FacebookManager />} />
         <Route path="contact" element={<ContactEditor />} />
+        <Route path="banner" element={<BannerManager />} />
+        <Route path="pages" element={<PagesManager />} />
         <Route path="seo" element={<SEOEditor />} />
         <Route path="media" element={<MediaLibrary />} />
         <Route path="*" element={<Navigate to="/admin" replace />} />
